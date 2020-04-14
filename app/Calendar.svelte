@@ -1,11 +1,10 @@
 <script>
     import { onMount } from 'svelte';
-    import { gapi } from './google.js';
 
     let isSignedIn = false;
 
     onMount( () => {
-        handleClientLoad();
+        # handleClientLoad();
     });
 
     $ : if (isSignedIn) {
