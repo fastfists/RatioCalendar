@@ -2,8 +2,8 @@
     import Event from './Event.svelte';
     
     let props = {
-        event_date: new Date('August 19, 1975 23:15:30'),
-        event_name: "WWIII",
+        date: new Date('August 19, 1975 23:15:30'),
+        name: "WWIII",
     };
 </script>
 
