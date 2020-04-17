@@ -19,9 +19,7 @@
   "license": "Apache-2.0",
   "repository": "https://github.com/halfnelson/svelte-native-template",
   "dependencies": {
-    "nativescript-socketio": "^3.3.1",
     "nativescript-theme-core": "~2.0.24",
-    "react-native-swift-socketio": "0.0.6",
     "svelte-native": "~0.8.0",
     "tns-core-modules": "~6.4.2"
   },

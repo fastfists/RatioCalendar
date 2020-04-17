@@ -1,20 +1,15 @@
 <page>
-    <actionBar title="Ratio Calcendar" />
-    <gridLayout>
+    <actionBar title="Ratio Calendar" />
+        <dockLayout stretchLastChild="true" backgroundColor="#3c495e">
+        <label text="Dock" height="55" dock="bottom" backgroundColor="#fff" color="#000"/>
         <Calendar />
-        <label class="info" horizontalAlignment="center" verticalAlignment="center" textWrap="true">
-            <formattedString>
-                <span class="fas" text="&#xf135;" />
-                <span text=" {message}" />
-            </formattedString>
-        </label>
-    </gridLayout>
+    </dockLayout>
 </page>
 
 <script>
-    import Calendar from './Calendar.svelte';
-
-    let message = "Blank Svelte Native App"
+    import { navigate } from 'svelte-native';
+    let message = "Blank Svelte Native App";
+    import Calendar from "./components/Calendar.svelte";
 </script>
 
 <style>
