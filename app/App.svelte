@@ -1,9 +1,21 @@
 <page>
     <actionBar title="Ratio Calendar" />
-        <dockLayout stretchLastChild="true" backgroundColor="#3c495e">
-        <label text="Dock" height="55" dock="bottom" backgroundColor="#fff" color="#000"/>
-        <Calendar />
-    </dockLayout>
+
+    <tabs tabsPosition="bottom">
+        <tabStrip> 
+            <tabStripItem title="Calendar" />
+            <tabStripItem title="Settings" />
+        </tabStrip> 
+
+        <tabContentItem>
+            <Calendar />
+        </tabContentItem>
+        
+        <tabContentItem>
+            <Calendar />
+        </tabContentItem>
+        
+    </tabs>
 </page>
 
 <script>
