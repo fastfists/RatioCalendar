@@ -15,16 +15,16 @@
     .cal-event {
         color: black; 
         background-color: #376776;
-        padding: 20px;
         border: 1px solid black;
+        margin: 5px;
     }
 </style>
 
-<dockLayout class="cal-event" stretchFirstChild="true">
-    <stackLayout>
+<flexboxLayout class="cal-event" alignItems="center" justifyContent="space-around"> 
+    <stackLayout flexGrow="100">
         <label class="p" text={formatDate(date)} />
         <label class="h2" text="{name}"/>
         <label class="p" text="{description}"/>
     </stackLayout>
-    <Timer {date} />
-</dockLayout>
+    <Timer flexGrow="50" {date} />
+</flexboxLayout>

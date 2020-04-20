@@ -14,15 +14,16 @@
 }
 </style>
 
-<stackLayout class="calendar">
-    <Event { ...props } />
-    <Event { ...props } />
-    <Event { ...props } />
-    <Event { ...props } />
-    <Event { ...props } />
-    <Event { ...props } />
-    <Event { ...props } />
-    <Event { ...props } />
-</stackLayout>
-
-
+<scrollView orientation="vertical">
+    <stackLayout class="calendar">
+        <Event { ...props } />
+        <Event { ...props } />
+        <Event { ...props } />
+        <Event { ...props } />
+        <Event { ...props } />
+        <Event { ...props } />
+        <Event { ...props } />
+        <Event { ...props } />
+        <Event { ...props } />
+    </stackLayout>
+</scrollView>
