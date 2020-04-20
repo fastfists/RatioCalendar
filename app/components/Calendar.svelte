@@ -16,6 +16,13 @@
 
 <stackLayout class="calendar">
     <Event { ...props } />
+    <Event { ...props } />
+    <Event { ...props } />
+    <Event { ...props } />
+    <Event { ...props } />
+    <Event { ...props } />
+    <Event { ...props } />
+    <Event { ...props } />
 </stackLayout>
 
 

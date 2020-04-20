@@ -40,9 +40,10 @@
 </style>
 
 <label text={time_string}/>
-<svg width="160" height="160" xmlns="http://www.w3.org/2000/svg">
+<htmlView 
+html='<svg width="160" height="160" xmlns="http://www.w3.org/2000/svg">
  <g>
   <circle id="circle" class="circle_animation" r="69.85699" cy="81" cx="81" stroke-width="8" stroke="#6fdb6f" fill="none"/>
  </g>
-</svg>
+</svg>' />
 

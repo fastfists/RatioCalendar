@@ -16,6 +16,7 @@
         color: black; 
         background-color: #376776;
         padding: 20px;
+        border: 1px solid black;
     }
 </style>
 
