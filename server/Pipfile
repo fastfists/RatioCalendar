@@ -11,6 +11,9 @@ flask-sqlalchemy = "*"
 flask-migrate = "*"
 python-dotenv = "*"
 psycopg2 = "*"
+flask-bcrypt = "*"
+flask-marshmallow = "*"
+marshmallow-sqlalchemy = "*"
 
 [requires]
 python_version = "3.8"

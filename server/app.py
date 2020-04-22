@@ -4,7 +4,7 @@ from models import Event
 
 def create_app():
 
-    from ext import db, migrate
+    from ext import db, migrate, bcrypt, ma
 
     app = Flask(__name__)
     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://ixrcohfw:Sp1xwKt9WhCkVvK8yued3PoH_xloNkyK@drona.db.elephantsql.com:5432/ixrcohfw'
@@ -13,7 +13,9 @@ def create_app():
     app.register_blueprint(api)
 
     db.init_app(app)
+    bcrypt.init_app(app)
     migrate.init_app(app, db)
+    ma.init_app(app)
 
     return app
 
