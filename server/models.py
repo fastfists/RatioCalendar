@@ -6,7 +6,7 @@ class User(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
 
-    username = db.Column(db.String)
+    username = db.Column(db.String, unique=True)
     slug = db.Column(db.String)
     email = db.Column(db.String)
     password = db.Column(db.String(256))
@@ -16,6 +16,7 @@ class User(db.Model):
 class Event(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
+
     name = db.Column(db.String, nullable=False)
     description = db.Column(db.Text, nullable=True)
     date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
@@ -23,4 +24,4 @@ class Event(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def __repr__(self):
-        return f"<Event {self.name}> {date}"
+        return f"<Event {self.name}> {self.date}"
