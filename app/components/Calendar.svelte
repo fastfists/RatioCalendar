@@ -1,29 +1,23 @@
 <script> 
     import Event from './Event.svelte';
-    
-    let props = {
-        date: new Date('September 20, 2020 23:15:30'),
-        name: "Storm Area 51",
-        description: "They can't stop us all"
-    };
+    import { setUp, user, getEvents } from '../utils';
+
+    let events = [];
+
 </script>
 
 <style>
-.calendar {
-    background-color: #000;
-}
+    .calendar {
+        background-color: #000;
+        color: #fff
+    }
+
 </style>
 
 <scrollView orientation="vertical">
     <stackLayout class="calendar">
-        <Event { ...props } />
-        <Event { ...props } />
-        <Event { ...props } />
-        <Event { ...props } />
-        <Event { ...props } />
-        <Event { ...props } />
-        <Event { ...props } />
-        <Event { ...props } />
-        <Event { ...props } />
+        {#each events as event}
+            <Event { ...event} />
+        {/each}
     </stackLayout>
 </scrollView>
