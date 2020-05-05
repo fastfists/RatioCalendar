@@ -1,4 +1,4 @@
-var url = "https://52068872.ngrok.io";
+var url = "https://ratiocal.herokuapp.com";
 
 export type User = { 
     username: string,
@@ -6,12 +6,20 @@ export type User = {
     email: string,
     password: string
 };
-export let user: User;
+export let user;
+
+function handleErrors(response) {
+  if (!response.ok) {
+    console.log(JSON.stringify(response));
+    throw Error(response.statusText);
+  }
+  return response;
+}
 
 export function setup() {
     loginUser("fastfist", "fastfist22")
+        .then(handleErrors)
         .then((userInfo) => {
-            console.log("fuck a nigga bitch");
             user = userInfo
         });
 }
@@ -26,14 +34,20 @@ export async function loginUser(username, password){
         username : username,
         password : password
     };
+
+    console.log("Information");
+
     let response = await fetch(`${url}/api/user/login`,{
         ...headers,
         method: "GET",
         body: JSON.stringify(sendJson)
     });
+
+    response = handleErrors(response);
+
     let json = await response.json();
     
-    return <User> json;
+    return json;
 }
 
 
@@ -49,6 +63,7 @@ export async function registerUser(username, email, password){
         method: "GET",
         body: JSON.stringify(sendJson)
     });
+    response = handleErrors(response);
 
     return await response.json();
 }
@@ -66,5 +81,4 @@ export async function getEvents() {
     });
 
     return await response.json()
-
 }

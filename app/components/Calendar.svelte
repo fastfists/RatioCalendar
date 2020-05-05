@@ -1,17 +1,24 @@
 <script> 
     import Event from './Event.svelte';
-    import { setUp, user, getEvents } from '../utils';
-
+    import { setup, user, getEvents } from '../utils';
+    
     let events = [];
+
+    setup();
+    console.log("setup complete");
+    getEvents()
+    .then(inEvents => {
+        events = inEvents;
+        console.log("important stuff");
+    })
+    .catch(error => {
+        events = error;
+        console.log(events);
+    });
 
 </script>
 
 <style>
-    .calendar {
-        background-color: #000;
-        color: #fff
-    }
-
 </style>
 
 <scrollView orientation="vertical">
