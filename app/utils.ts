@@ -1,33 +1,48 @@
 var url = "https://ratiocal.herokuapp.com";
 
+
+export type Event = {
+    name: string,
+    description: string,
+    date : Date
+    user_id: number
+} | number;
+
 export type User = { 
     username: string,
     slug: string,
     email: string,
     password: string
+    events: Array<Event>
 };
-export let user;
+export let user:User;
 
 function handleErrors(response) {
-  if (!response.ok) {
-    console.log(JSON.stringify(response));
-    throw Error(response.statusText);
-  }
-  return response;
+    if (!response.ok) {
+        console.log(JSON.stringify(response));
+        throw Error(response.statusText);
+    }
+    return response;
 }
 
 export function setup() {
     loginUser("fastfist", "fastfist22")
         .then(handleErrors)
         .then((userInfo) => {
-            user = userInfo
+            user = <User> userInfo;
+            console.log(user.username);
+        })
+        .catch(error => {
+            console.log(error);
         });
 }
 
-let headers = {headers: {
+let headers = {
+    headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
-        }}
+        }
+    }
 
 export async function loginUser(username, password){
     let sendJson = {
@@ -35,11 +50,9 @@ export async function loginUser(username, password){
         password : password
     };
 
-    console.log("Information");
-
     let response = await fetch(`${url}/api/user/login`,{
         ...headers,
-        method: "GET",
+        method: "POST",
         body: JSON.stringify(sendJson)
     });
 
@@ -60,7 +73,7 @@ export async function registerUser(username, email, password){
 
     let response = await fetch(`${url}/api/user/create`,{
         ...headers,
-        method: "GET",
+        method: "POST",
         body: JSON.stringify(sendJson)
     });
     response = handleErrors(response);
@@ -76,7 +89,7 @@ export async function getEvents() {
 
     let response = await fetch(`${url}/api/user/create`,{
         ...headers,
-        method: "GET",
+        method: "POST",
         body: JSON.stringify(sendJson)
     });
 

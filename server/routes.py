@@ -6,7 +6,7 @@ from schemas import UserScehma, EventSchema, UserEventsSchema
 
 api = Blueprint(__name__, 'api')
 
-@api.route('/api/events/')
+@api.route('/api/events/', methods=["GET","POST"])
 def getEvent():
     """
         Get Event By user
@@ -26,7 +26,7 @@ def getEvent():
     else:
         return jsonify({"error" : "Incorrect password"})
 
-@api.route('/api/events/create')
+@api.route('/api/events/create', methods=["GET","POST"])
 def createEvent():
     """
         {
@@ -47,7 +47,7 @@ def createEvent():
 
     return jsonify(EventSchema(many=True).dump(user.events))
 
-@api.route('/api/user/create')
+@api.route('/api/user/create', methods=["GET","POST"])
 def createUser():
 
     schema = UserScehma(partial=True)
@@ -69,7 +69,7 @@ def createUser():
     return jsonify(UserScehma().dump(user))
 
 
-@api.route('/api/user/login')
+@api.route('/api/user/login', methods=["GET","POST"])
 def login():
     """
     {

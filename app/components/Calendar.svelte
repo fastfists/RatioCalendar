@@ -4,16 +4,13 @@
     
     let events = [];
 
-    setup();
-    console.log("setup complete");
+
     getEvents()
     .then(inEvents => {
         events = inEvents;
         console.log("important stuff");
     })
     .catch(error => {
-        events = error;
-        console.log(events);
     });
 
 </script>
