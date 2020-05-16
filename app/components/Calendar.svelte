@@ -2,16 +2,20 @@
     import Event from './Event.svelte';
     import { setup, user, getEvents } from '../utils';
     
-    let events = [];
-
+    let events;
+    setup();
 
     getEvents()
-    .then(inEvents => {
-        events = inEvents;
-        console.log("important stuff");
-    })
-    .catch(error => {
-    });
+        .then(inEvents => {
+            console.log("whooooo")
+            console.log("whooooo")
+            events = inEvents;
+        })
+        .catch(e => {
+            console.log("yyikes")
+            console.log(e);
+        });
+    console.log(events)
 
 </script>
 
@@ -20,8 +24,5 @@
 
 <scrollView orientation="vertical">
     <stackLayout class="calendar">
-        {#each events as event}
-            <Event { ...event} />
-        {/each}
     </stackLayout>
 </scrollView>

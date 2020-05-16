@@ -5,7 +5,7 @@ export type Event = {
     name: string,
     description: string,
     date : Date
-    user_id: number
+    user: number
 } | number;
 
 export type User = { 
@@ -15,13 +15,15 @@ export type User = {
     password: string
     events: Array<Event>
 };
+
 export let user:User;
 
 function handleErrors(response) {
-    if (!response.ok) {
-        console.log(JSON.stringify(response));
-        throw Error(response.statusText);
-    }
+    // TODO: add errors to server 
+    // if (!response.ok) {
+    //     console.log(JSON.stringify(response));
+    //     throw Error(response.statusText);
+    // }
     return response;
 }
 
@@ -30,7 +32,6 @@ export function setup() {
         .then(handleErrors)
         .then((userInfo) => {
             user = <User> userInfo;
-            console.log(user.username);
         })
         .catch(error => {
             console.log(error);
@@ -82,16 +83,20 @@ export async function registerUser(username, email, password){
 }
 
 export async function getEvents() {
+
     let sendJson = {
         slug: user.slug,
         password: user.password
     }
 
-    let response = await fetch(`${url}/api/user/create`,{
+    let response = await fetch(`${url}/api/events`,{
         ...headers,
         method: "POST",
         body: JSON.stringify(sendJson)
     });
+
+    console.log(response)
+    response = handleErrors(response);
 
     return await response.json()
 }
