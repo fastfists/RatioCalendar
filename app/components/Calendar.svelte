@@ -2,27 +2,86 @@
     import Event from './Event.svelte';
     import { setup, user, getEvents } from '../utils';
     
-    let events;
-    setup();
+    let events = [];
+    let now = new Date("2020-09-21T04:15:30");
 
-    getEvents()
-        .then(inEvents => {
-            console.log("whooooo")
-            console.log("whooooo")
-            events = inEvents;
-        })
-        .catch(e => {
-            console.log("yyikes")
-            console.log(e);
-        });
-    console.log(events)
+    /* setup(); */
+    /* getEvents() */
+    /*     .then(inEvents => { */
+    /*         console.log("whooooo") */
+    /*         console.log("whooooo") */
+    /*         events = inEvents; */
+    /*     }) */
+    /*     .catch(e => { */
+    /*         console.log("yyikes") */
+    /*         console.log(e); */
+    /*     }); */
+    /* console.log(events) */
+    events = [
+        {
+            "date": new Date("2020-09-21T04:15:30"),
+            "description": "They can't Stop us all",
+            "name": "Storm Area 51",
+            "user": 7
+        },
+        {
+            "date": new Date("2020-09-21T04:15:30"),
+            "description": "They can't Stop us all",
+            "name": "Storm Area 51",
+            "user": 7
+        },
+        {
+            "date": new Date("2020-09-21T04:15:30"),
+            "description": "They can't Stop us all",
+            "name": "Storm Area 51",
+            "user": 7
+        },
+        {
+            "date": new Date("2020-09-21T04:15:30"),
+            "description": "They can't Stop us all",
+            "name": "Storm Area 51",
+            "user": 7
+        },
+        {
+            "date": new Date("2020-09-21T04:15:30"),
+            "description": "They can't Stop us all",
+            "name": "Storm Area 51",
+            "user": 7
+        },
+        {
+            "date": new Date("2020-09-21T04:15:30"),
+            "description": "They can't Stop us all",
+            "name": "Storm Area 51",
+            "user": 7
+        },
+    ]
 
+    function formatDate() {
+        let months = ["Jan", "Feb", "Mar","Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
+        var days = ["Monday", "Tuesday", "Wendsday", "Thursday", "Friday", "Saturday", "Sunday"]
+        return `${days[now.getDay()]} ${now.getDate()}, ${months[now.getMonth()]}.`
+    }
 </script>
 
 <style>
+    .calendar {
+        background-color: #322D3A;
+        padding: 12 10;
+    }
 </style>
 
 <scrollView orientation="vertical">
     <stackLayout class="calendar">
+        <label class="h1 thin blue" text="Hello,"/>
+        <flexboxLayout justifyContent="space-between" alignItems="center">
+            <label class="h1 bold blue" text="Denzell"/>
+            <label class="blue thin" text="{formatDate()}" />
+        </flexboxLayout>
+        {#each events as event, i}
+            {#if i == 0}
+                <Event big=true {...event} />
+            {/if }
+            <Event {...event} />
+        {/each}
     </stackLayout>
 </scrollView>

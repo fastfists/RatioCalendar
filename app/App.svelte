@@ -8,11 +8,11 @@
         </tabStrip> 
 
         <tabContentItem>
-            <Calendar />
+            <label text="Settings" />
         </tabContentItem>
         
         <tabContentItem>
-            <Calendar />
+            <label text="Settings" />
         </tabContentItem>
         
     </tabs>

@@ -38,8 +38,7 @@
       transition: all 1s linear;
     }
 </style>
-
-<label text={time_string}/>
+    <label text={time_string}/>
 <htmlView 
 html='<svg width="160" height="160" xmlns="http://www.w3.org/2000/svg">
  <g>

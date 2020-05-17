@@ -28,6 +28,7 @@ function handleErrors(response) {
 }
 
 export function setup() {
+    console.log("Setting up")
     loginUser("fastfist", "fastfist22")
         .then(handleErrors)
         .then((userInfo) => {
@@ -36,6 +37,7 @@ export function setup() {
         .catch(error => {
             console.log(error);
         });
+    console.log(`Logged in user ${user.username}`);
 }
 
 let headers = {
@@ -77,6 +79,7 @@ export async function registerUser(username, email, password){
         method: "POST",
         body: JSON.stringify(sendJson)
     });
+
     response = handleErrors(response);
 
     return await response.json();
@@ -95,6 +98,14 @@ export async function getEvents() {
         body: JSON.stringify(sendJson)
     });
 
+    if (response.status == 308) {
+        response = await fetch(response.location, {
+            ...headers,
+            method: "POST",
+            body: JSON.stringify(sendJson)
+        });
+    }
+    
     console.log(response)
     response = handleErrors(response);
 

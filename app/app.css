@@ -13,3 +13,25 @@ The imported CSS rules must precede all other types of rules.
 @import '~nativescript-theme-core/css/core.css';
 @import './font-awesome.css';
 
+.h1 {
+    font-family: Roboto;
+    font-style: normal;
+    font-size: 40;
+    margin: 0;
+    line-height: 0; 
+}
+
+.blue {
+   color: #97E2E2;
+}
+.thin {
+    font-weight: 200;
+}
+
+.small {
+    font-size: 12;
+}
+
+.bold {
+    font-weight: bold;
+}
