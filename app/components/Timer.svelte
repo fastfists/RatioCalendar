@@ -26,23 +26,4 @@
     let inerval = setInterval(() => {updateTime()}, 1000 );
 </script>
 
-<style> 
-    svg {
-       -webkit-transform: rotate(-90deg);
-        transform: rotate(-90deg);
-    }
-
-    .circle_animation {
-      stroke-dasharray: 440; /* this value is the pixel circumference of the circle */
-      stroke-dashoffset: 440;
-      transition: all 1s linear;
-    }
-</style>
-    <label text={time_string}/>
-<htmlView 
-html='<svg width="160" height="160" xmlns="http://www.w3.org/2000/svg">
- <g>
-  <circle id="circle" class="circle_animation" r="69.85699" cy="81" cx="81" stroke-width="8" stroke="#6fdb6f" fill="none"/>
- </g>
-</svg>' />
-
+<label text={time_string}/>

@@ -1,5 +1,6 @@
 <script> 
     import Event from './Event.svelte';
+    import { Template } from "svelte-native/components";
     import { setup, user, getEvents } from '../utils';
     
     let events = [];
@@ -16,6 +17,8 @@
     /*         console.log("yyikes") */
     /*         console.log(e); */
     /*     }); */
+    /* console.log(events) */
+    /* console.log(events) */
     /* console.log(events) */
     events = [
         {
@@ -78,10 +81,8 @@
             <label class="blue thin" text="{formatDate()}" />
         </flexboxLayout>
         {#each events as event, i}
-            {#if i == 0}
-                <Event big=true {...event} />
-            {/if }
-            <Event {...event} />
+            <Event big={i == 0} {...event} />
         {/each}
     </stackLayout>
 </scrollView>
+

@@ -1,5 +1,5 @@
 <page>
-    <actionBar title="Ratio Calendar" />
+    <actionBar flat="true" title="Ratio Calendar" />
 
     <tabs tabsPosition="bottom">
         <tabStrip> 
@@ -8,20 +8,19 @@
         </tabStrip> 
 
         <tabContentItem>
-            <label text="Settings" />
+            <Calendar />
         </tabContentItem>
         
         <tabContentItem>
-            <label text="Settings" />
+            <Settings />
         </tabContentItem>
         
     </tabs>
 </page>
 
 <script>
-    import { navigate } from 'svelte-native';
-    let message = "Blank Svelte Native App";
     import Calendar from "./components/Calendar.svelte";
+    import Settings from "./components/Settings.svelte";
 </script>
 
 <style>
