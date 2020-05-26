@@ -2,7 +2,7 @@
     import { onMount } from 'svelte';
     import Timer from './Timer.svelte';
 	import EventDetail from './EventDetail.svelte'
-	import { navigate } from 'svelte-native'
+	import { showModal, navigate } from 'svelte-native'
     export let date;
     export let name;
     export let description;
@@ -15,10 +15,18 @@
     }
 
     function showDetails() {
+        let eventDetails = {
+            date : date,
+            name : name,
+            description : description
+        }
+
+        console.log("navigating beginign")
+
         navigate({
             page: EventDetail,
-            props: { date : date, name : name, description : description }
-        })
+            props: eventDetails,
+        });
     }
 </script>
 
@@ -42,8 +50,6 @@
     .big h1 {
         font-size: 50;
     }
-
-
 </style>
 
 <flexboxLayout class:big class="cal-event" alignItems="center" justifyContent="space-around"> 
@@ -53,8 +59,7 @@
         <label class="p" text="{description}"/>
     </stackLayout>
     <stackLayout>
-        <button text="Show more" on:swipe={ showDetails() } />
-        <label text="Show more"} />
+        <button text="Show more" on:tap={ showDetails } />
         <Timer  {date} />
     </stackLayout>
 </flexboxLayout>

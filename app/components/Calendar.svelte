@@ -33,30 +33,6 @@
             "name": "Storm Area 51",
             "user": 7
         },
-        {
-            "date": new Date("2020-09-21T04:15:30"),
-            "description": "They can't Stop us all",
-            "name": "Storm Area 51",
-            "user": 7
-        },
-        {
-            "date": new Date("2020-09-21T04:15:30"),
-            "description": "They can't Stop us all",
-            "name": "Storm Area 51",
-            "user": 7
-        },
-        {
-            "date": new Date("2020-09-21T04:15:30"),
-            "description": "They can't Stop us all",
-            "name": "Storm Area 51",
-            "user": 7
-        },
-        {
-            "date": new Date("2020-09-21T04:15:30"),
-            "description": "They can't Stop us all",
-            "name": "Storm Area 51",
-            "user": 7
-        },
     ]
 
     function formatDate() {
