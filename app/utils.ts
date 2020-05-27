@@ -28,7 +28,6 @@ function handleErrors(response) {
 }
 
 export function setup() {
-    console.log("Setting up")
     loginUser("fastfist", "fastfist22")
         .then(handleErrors)
         .then((userInfo) => {
@@ -37,7 +36,6 @@ export function setup() {
         .catch(error => {
             console.log(error);
         });
-    console.log(`Logged in user ${user.username}`);
 }
 
 let headers = {

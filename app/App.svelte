@@ -1,6 +1,4 @@
-<page>
-    <actionBar flat="true" title="Ratio Calendar" />
-
+<page actionBarHidden=true>
     <tabs tabsPosition="bottom">
         <tabStrip> 
             <tabStripItem title="Calendar" />

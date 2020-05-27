@@ -13,6 +13,12 @@ The imported CSS rules must precede all other types of rules.
 @import '~nativescript-theme-core/css/core.css';
 @import './font-awesome.css';
 
+
+.bg {
+    background-color: #322D3A;
+    padding: 12 10;
+}
+
 .h1 {
     font-family: Roboto;
     font-style: normal;
@@ -21,6 +27,9 @@ The imported CSS rules must precede all other types of rules.
     line-height: 0; 
 }
 
+.text-muted {
+    color : #AAAAAA;
+}
 .blue {
    color: #97E2E2;
 }
@@ -34,4 +43,8 @@ The imported CSS rules must precede all other types of rules.
 
 .bold {
     font-weight: bold;
+}
+
+.white {
+    color: white;
 }

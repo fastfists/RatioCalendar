@@ -33,24 +33,36 @@
             "name": "Storm Area 51",
             "user": 7
         },
+        {
+            "date": new Date("2020-09-21T04:15:30"),
+            "description": "They can't Stop us all",
+            "name": "Storm Area 51",
+            "user": 7
+        },
+        {
+            "date": new Date("2020-09-21T04:15:30"),
+            "description": "They can't Stop us all",
+            "name": "Storm Area 51",
+            "user": 7
+        },
+        {
+            "date": new Date("2020-09-21T04:15:30"),
+            "description": "They can't Stop us all",
+            "name": "Storm Area 51",
+            "user": 7
+        },
     ]
 
     function formatDate() {
         let months = ["Jan", "Feb", "Mar","Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
         var days = ["Monday", "Tuesday", "Wendsday", "Thursday", "Friday", "Saturday", "Sunday"]
+        
         return `${days[now.getDay()]} ${now.getDate()}, ${months[now.getMonth()]}.`
     }
 </script>
 
-<style>
-    .calendar {
-        background-color: #322D3A;
-        padding: 12 10;
-    }
-</style>
-
 <scrollView orientation="vertical">
-    <stackLayout class="calendar">
+    <stackLayout class="bg">
         <label class="h1 thin blue" text="Hello,"/>
         <flexboxLayout justifyContent="space-between" alignItems="center">
             <label class="h1 bold blue" text="Denzell"/>

@@ -21,11 +21,11 @@
             description : description
         }
 
-        console.log("navigating beginign")
+        console.log(date)
 
         navigate({
             page: EventDetail,
-            props: eventDetails,
+            props: {...eventDetails},
         });
     }
 </script>
