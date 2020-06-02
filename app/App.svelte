@@ -1,5 +1,6 @@
 <page actionBarHidden=true>
     <tabs tabsPosition="bottom">
+
         <tabStrip> 
             <tabStripItem>
                 <label text="Calendar" />
@@ -14,25 +15,30 @@
         <tabContentItem>
             <Calendar />
         </tabContentItem>
-        
+
         <tabContentItem>
             <Settings />
         </tabContentItem>
-        
+
     </tabs>
 </page>
 
 <style>
-    TabContentItem {
-        background: black;
+
+    TabStripItem {
+        background-color: #97E2E2;
+        color : #909090;
     }
+
 
     .info .fas {
         color: #3A53FF;
     }
+
     .info {
         font-size: 20;
     }
+
 </style>
 
 <script>

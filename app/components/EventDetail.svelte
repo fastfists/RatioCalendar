@@ -15,23 +15,30 @@
         let hours = Math.abs(date.getHours() - 11); // getHours() is from 0-23
         let AM = (date.getHours() > 11)? "AM": "PM" 
         let minutes = date.getMinutes();
-        return `${hours}:${minutes} ${AM} `
+        return `${hours}:${minutes} ${AM}`
     }
 
-    let dateString = formatDate() + "\r\n" + formatTime();
+    let dateString = formatDate()
+    let timeString = formatTime()
 
 </script>
 
 <style>
     .title {
-        border: 5 solid #97E2E2;
+        text-decoration: underline;
     }
 </style>
 
 <page actionBarHidden=true>
-    <stackLayout class="bg title">
-        <label class="h1 white title" text="{name}" />
-        <label class="text-muted" text="{dateString}"/>
+    <stackLayout class="bg">
+    <flexBoxLayout flexDirection="column"
+                justifyContent="space-around">
+            <label class="h1 white title" text="{name}" />
+            <label class="text-muted" text="{dateString}"/>
+            <label class="text-muted" text="{timeString + " CST"}"/>
+            <Timer class="text-muted" color="#AAAAAA" date={date}/>
+        </flexBoxLayout>
+        
 
         <label class="h1 white title" text="Description" />
         <label class="text-muted" text="{description}" />

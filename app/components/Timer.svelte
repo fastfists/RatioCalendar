@@ -1,5 +1,7 @@
 <script>
     export let date;
+    export let color;
+
     let time_string;
     updateTime();
 
@@ -26,4 +28,4 @@
     let inerval = setInterval(() => {updateTime()}, 1000 );
 </script>
 
-<label text={time_string}/>
+<label style="color :{color}" text={time_string}/>

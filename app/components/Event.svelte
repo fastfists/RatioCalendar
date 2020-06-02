@@ -40,8 +40,6 @@
     }
 
     .big {
-        color: black; 
-        background-color: #C6C1CE;
         margin: 6 0;
         border-radius: 12;
         padding: 12 0;
@@ -59,7 +57,9 @@
         <label class="p" text="{description}"/>
     </stackLayout>
     <stackLayout>
-        <button text="Show more" on:tap={ showDetails } />
+        <label class="fas bg fa-chevron-right" 
+               style="background-color: #C6C1CE;" 
+               text="&#xf054" on:tap={ showDetails } />
         <Timer  {date} />
     </stackLayout>
 </flexboxLayout>
