@@ -12,18 +12,18 @@ def getEvent():
         Get Event By user
         {
             slug: slug
+            password: passwordhash
         }
     """
-
-    schema = UserScehma(many=False)
-    body = schema.load(request.json)
-
-    slug = body.slug
-    user = User.query.filter_by(slug=slug).first_or_404()
     
-    if user.password == body.password:
+    body = request.json
+    user = User.query.filter_by(slug=body["slug"]).first()
+    
+    if user.password == body["password"]:
+        print("Correct Password returning events")
         return jsonify(EventSchema(many=True).dump(user.events))
     else:
+        print("Wrong password sending error code")
         return jsonify({"error" : "Incorrect password"})
 
 @api.route('/api/events/create', methods=["GET","POST"])
