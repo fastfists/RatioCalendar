@@ -1,5 +1,28 @@
-@import "~@nativescript/theme/core";
-@import "~@nativescript/theme/blue";
+$base-theme:Default;
+$skin-name:Mint;
+$swatch-name:Default;
+$border-radius: 2px;
+$accent: #97e2e2;
+$info: #3e80ed;
+$success: #5ec232;
+$warning: #fdce3e;
+$error: #d51923;
+$text-color: #ffffff;
+$bg-color: #322d3a;
+$base-text: #656565;
+$base-bg: #c6c1ce;
+$hovered-text: #656565;
+$hovered-bg: #c6c1ce;
+$selected-text: #322d3a;
+$selected-bg: #1ab8db;
+$series-a: #ff6358;
+$series-b: #ffd246;
+$series-c: #78d237;
+$series-d: #28b4c8;
+$series-e: #2d73f5;
+$series-f: #aa46be;
+
+@import "~@nativescript/theme/index";
 
 // Place any CSS rules you want to apply on both iOS and Android here.
 // This is where the vast majority of your CSS code goes.
@@ -23,12 +46,12 @@
 
 
 // Custom tabstrip item class
-.navigation__item {
-    &:active,
-    &:active Label {
-        @include colorize($contrasted-color: complementary background 20% 0%);
-    }
-}
+// .navigation__item {
+//     &:active,
+//     &:active Label {
+//         @include colorize($contrasted-color: complementary background 20% 0%);
+//     }
+// }
 
 // Common page class
 .page__content {
