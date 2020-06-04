@@ -1,7 +1,6 @@
 <page actionBarHidden=true>
-    <tabs tabsPosition="bottom">
-
-        <tabStrip> 
+    <tabs bind:selectedIndex={selectedTab} tabsPosition="bottom"> 
+        <tabStrip>
             <tabStripItem>
                 <label text="Calendar" />
                 <image src="font://&#xf133" class="far"/>
@@ -15,34 +14,25 @@
         <tabContentItem>
             <Calendar />
         </tabContentItem>
-
         <tabContentItem>
             <Settings />
         </tabContentItem>
-
     </tabs>
 </page>
 
 <style>
-
-    TabStripItem {
-        background-color: #97E2E2;
-        color : #909090;
-    }
-
-
-    .info .fas {
-        color: #3A53FF;
-    }
-
-    .info {
-        font-size: 20;
-    }
 
 </style>
 
 <script>
     import Calendar from "./components/Calendar.svelte";
     import Settings from "./components/Settings.svelte";
+
+    let selectedTab;
+    
+    console.log(selectedTab)
+    $: (selectedTab) => {
+        console.log(selectedTab)
+    }
 </script>
 

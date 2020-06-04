@@ -18,7 +18,7 @@ export type User = {
 
 export let user:User;
 
-function handleErrors(response) {
+function handleErrors(response:Object) {
     // TODO: add errors to server 
     // if (!response.ok) {
     //     console.log(JSON.stringify(response));
@@ -45,7 +45,7 @@ let headers = {
         }
     }
 
-export async function loginUser(username, password){
+export async function loginUser(username:String, password:String){
     let sendJson = {
         username : username,
         password : password
@@ -65,7 +65,7 @@ export async function loginUser(username, password){
 }
 
 
-export async function registerUser(username, email, password){
+export async function registerUser(username:String, email:String, password:String){
     let sendJson = {
         username : username,
         email : email,

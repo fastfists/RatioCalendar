@@ -14,6 +14,7 @@ The imported CSS rules must precede all other types of rules.
 @import './font-awesome.css';
 
 
+
 .bg {
     background-color: #322D3A;
     padding: 12 10;
