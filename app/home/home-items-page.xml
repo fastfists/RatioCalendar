@@ -1,0 +1,31 @@
+<Page
+    actionBarHidden="true"
+    navigatingTo="onNavigatingTo"  
+    xmlns="http://schemas.nativescript.org/tns.xsd">
+
+        <stackLayout class="bg">
+            <label class="h1 thin blue" text="Hello,"/>
+            <flexboxLayout justifyContent="space-between" alignItems="center">
+                <label class="h1 bold blue" text="{{ user.name }}"/>
+                <label class="blue thin" text="{formatDate()}" />
+            </flexboxLayout>
+
+            <ListView items="{{ events }}"  >
+                <ListView.itemTemplate>
+                    <StackLayout>
+                        <flexboxLayout class="cal-event" alignItems="center" justifyContent="space-around"> 
+                            <stackLayout>
+                                <label class="p thin small" text="date" />
+                                <label class="h1 bold" text="{{ name }}"/>
+                                <label class="p" text="{{ description }}"/>
+                            </stackLayout>
+                            <stackLayout>
+                                <Label text="&#xf054;" class="fas fa-chevron-right" />
+                            </stackLayout>
+                        </flexboxLayout>
+                    </StackLayout>
+                </ListView.itemTemplate>
+            </ListView>
+        </stackLayout>
+
+</Page>
