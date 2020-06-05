@@ -1,5 +1,5 @@
 import { View } from "tns-core-modules/ui/core/view";
-import { ItemEventData } from "tns-core-modules/ui/list-view";
+import { SwipeGestureEventData } from "tns-core-modules/ui/gestures";
 import { NavigatedData, Page } from "tns-core-modules/ui/page";
 
 import { HomeViewModel } from "./home-view-model";
@@ -10,14 +10,14 @@ export function onNavigatingTo(args: NavigatedData) {
     page.bindingContext = new HomeViewModel();
 }
 
-export function onItemTap(args: ItemEventData) {
+export function onEventSwipe(args: SwipeGestureEventData) {
     const view = <View>args.view;
     const page = <Page>view.page;
-    const tappedItem = <Event>view.bindingContext;
+    const event = <Event>view.bindingContext;
 
     page.frame.navigate({
-        moduleName: "home/home-item-detail/home-item-detail-page",
-        context: tappedItem,
+        moduleName: "home/event-details-page/event-details-page",
+        context: event,
         animated: true,
         transition: {
             name: "slide",

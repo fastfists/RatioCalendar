@@ -4,13 +4,13 @@
     xmlns="http://schemas.nativescript.org/tns.xsd">
 
         <stackLayout class="bg">
-            <label class="h1 thin blue" text="Hello,"/>
+            <label class="h1 thin" text="Hello" />
             <flexboxLayout justifyContent="space-between" alignItems="center">
                 <label class="h1 bold blue" text="{{ user.name }}"/>
                 <label class="blue thin" text="{formatDate()}" />
             </flexboxLayout>
 
-            <ListView items="{{ events }}"  >
+            <ListView items="{{ events }}" itemTap="onItemTap">
                 <ListView.itemTemplate>
                     <StackLayout>
                         <flexboxLayout class="cal-event" alignItems="center" justifyContent="space-around"> 

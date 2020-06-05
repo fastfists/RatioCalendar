@@ -5,6 +5,10 @@ export interface Event {
 }
 
 export interface User {
-    name: String;
+    username: String;
+    slug: String;
+    email: String;
+    passwordHash: String;
+    events: Array<Event>;
 }
 
