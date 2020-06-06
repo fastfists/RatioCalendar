@@ -2,6 +2,8 @@ import 'package:RatioCalendar/src/api/api.dart';
 import 'package:RatioCalendar/src/event.dart';
 import 'package:flutter/material.dart';
 
+
+
 void main() => runApp(App());
 
 class App extends StatelessWidget {
@@ -31,6 +33,7 @@ class HomePage extends StatefulWidget {
 class HomePageState extends State<HomePage> {
     List<Event> _events;
     int counter = 0;
+
     Api api = Api("fastfist", "fastfist22");
 
     void _incrementCounter() {

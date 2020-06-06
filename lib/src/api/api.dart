@@ -1,44 +1,41 @@
+import 'dart:ffi';
 
 import 'package:RatioCalendar/src/event.dart';
 import 'package:RatioCalendar/src/user.dart';
 import "dart:convert";
 import "dart:io";
 import "dart:async";
+import 'package:http/http.dart' as http;
 
 
 class Api {
-  String url = "https://ratiocal.herokuapp.com";
+  String host = "https://ratiocal.herokuapp.com";
   User user;
 
   String username;
   String password;
 
-  Future<String> _makeRequest(Map sendJson) async {
-    HttpClient client = new HttpClient();
-    HttpClientRequest request = await client.postUrl(Uri.parse(this.url));
-    request.headers.set("content-type", "application/json");
-    request.add(utf8.encode(json.encode(sendJson)));
-    HttpClientResponse response= await request.close();
-    // TODO: check response status code and ensure ok request
-    String reply = await response.transform(utf8.decoder).join();
-    client.close();
+  Future<Map<String, dynamic>> _makeRequest(String urlPath, Map sendJson) async {
 
-    return reply;
+    Uri uri = Uri.parse(this.host + urlPath);
+    String jsonString = json.encode(sendJson);
+    Map headers = <String, String>{ HttpHeaders.contentTypeHeader: "application/json" };
+    var response = await http.post(uri, headers: headers, body:jsonString);
+
+    // TODO: check response status code and ensure ok request
+    print('---- status code: ${response.statusCode}');
+    Map<String, dynamic> receiveJson = json.decode(response.body);
+    print(receiveJson);
+
+    return receiveJson;
   }
 
+  Future<bool> loginUser() async {
+    var json = <String, String>{ "username" : this.username, "password": this.password };
+    var reply = await this._makeRequest("/api/user/login",json)
 
-  bool loginUser() {
-
-    var json = { "slug" : this.username, "password": this.password };
-    this.user = user;
-    String reply;
-    this._makeRequest(json)
-        .then((value) => reply = value)
-        .catchError((e) {
-          print(e.error);
-          return 42;
-        });
-    print(reply);
+    // cast json to user
+    //this.user = (User) reply;
   }
 
 

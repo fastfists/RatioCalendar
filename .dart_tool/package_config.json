@@ -68,6 +68,18 @@
       "languageVersion": "2.2"
     },
     {
+      "name": "http",
+      "rootUri": "file:///home/fastfist/.pub-cache/hosted/pub.dartlang.org/http-0.12.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.4"
+    },
+    {
+      "name": "http_parser",
+      "rootUri": "file:///home/fastfist/.pub-cache/hosted/pub.dartlang.org/http_parser-3.1.4",
+      "packageUri": "lib/",
+      "languageVersion": "2.3"
+    },
+    {
       "name": "image",
       "rootUri": "file:///home/fastfist/.pub-cache/hosted/pub.dartlang.org/image-2.1.12",
       "packageUri": "lib/",
@@ -90,6 +102,12 @@
       "rootUri": "file:///home/fastfist/.pub-cache/hosted/pub.dartlang.org/path-1.6.4",
       "packageUri": "lib/",
       "languageVersion": "2.0"
+    },
+    {
+      "name": "pedantic",
+      "rootUri": "file:///home/fastfist/.pub-cache/hosted/pub.dartlang.org/pedantic-1.9.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.1"
     },
     {
       "name": "petitparser",
@@ -170,7 +188,7 @@
       "languageVersion": "2.7"
     }
   ],
-  "generated": "2020-06-05T22:49:28.235470Z",
+  "generated": "2020-06-06T15:12:34.810293Z",
   "generator": "pub",
   "generatorVersion": "2.8.4"
 }

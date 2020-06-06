@@ -8,4 +8,5 @@ class User {
   List<Event> events;
 
   User(this.username, this.slug, this.email, this.password);
+
 }
