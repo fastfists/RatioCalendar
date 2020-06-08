@@ -1,7 +1,7 @@
-import 'package:RatioCalendar/src/api/api.dart';
-import 'package:RatioCalendar/src/event.dart';
+import 'package:RatioCalendar/api/api.dart';
+import 'package:RatioCalendar/event.dart';
+import 'package:RatioCalendar/widgets/Calendar.dart';
 import 'package:flutter/material.dart';
-
 
 
 void main() => runApp(App());
@@ -31,11 +31,7 @@ class HomePage extends StatefulWidget {
 }
 
 class HomePageState extends State<HomePage> {
-    List<Event> _events;
     int counter = 0;
-
-    Api api = Api("fastfist", "fastfist22");
-
     void _incrementCounter() {
         setState(() {
             counter++;
@@ -44,7 +40,6 @@ class HomePageState extends State<HomePage> {
 
     @override
     Widget build(BuildContext context) {
-        print(api.loginUser());
         return Scaffold(
             appBar: AppBar(
                 title: Text(widget.title),
@@ -63,6 +58,7 @@ class HomePageState extends State<HomePage> {
                             "I just fucked ur bitch ho",
                             style: Theme.of(context).textTheme.headline4
                         ),
+                        CalendarWidget()
                     ],
                 ),
             ),
@@ -71,7 +67,6 @@ class HomePageState extends State<HomePage> {
             tooltip: 'Increment',
             child: Icon(Icons.add),
             ),
-
         );
     }
 }
