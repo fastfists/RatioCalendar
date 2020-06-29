@@ -7,5 +7,3 @@ String host = "https://ratiocal.herokuapp.com";
 
 bool loginUser(){
   // logins a user, returns true if worked.
-
-}

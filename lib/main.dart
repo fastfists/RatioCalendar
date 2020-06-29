@@ -1,8 +1,12 @@
 import 'package:RatioCalendar/screens/Calendar.dart';
+import 'package:RatioCalendar/service_locator.dart';
 import 'package:RatioCalendar/screens/LoginPage.dart';
 import 'package:flutter/material.dart';
 
-void main() => runApp(App());
+void main() {
+  setupLocator();
+  runApp(App());
+}
 
 class App extends StatelessWidget {
   // This widget is the root of your application.

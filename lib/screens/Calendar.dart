@@ -60,6 +60,13 @@ class EventDetails extends StatelessWidget {
           ),
           child: Row(
             children: <Widget>[
+              Center(
+                child: Column(
+                  children: [
+                    Text("${this.event.date}"),
+                  ],
+                )
+              ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[

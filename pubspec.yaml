@@ -25,6 +25,8 @@ dependencies:
   functional_widget_annotation: ^0.5.1
   flutter:
     sdk: flutter
+  get_it:
+  provider:
 
 
   # The following adds the Cupertino Icons font to your application.

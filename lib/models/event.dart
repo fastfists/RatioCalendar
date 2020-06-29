@@ -1,6 +1,3 @@
-
-
-
 class Event {
   String name;
   String description;

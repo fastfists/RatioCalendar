@@ -14,12 +14,6 @@
       "languageVersion": "2.6"
     },
     {
-      "name": "archive",
-      "rootUri": "file:///home/fastfist/.pub-cache/hosted/pub.dartlang.org/archive-2.0.13",
-      "packageUri": "lib/",
-      "languageVersion": "2.0"
-    },
-    {
       "name": "args",
       "rootUri": "file:///home/fastfist/.pub-cache/hosted/pub.dartlang.org/args-1.6.0",
       "packageUri": "lib/",
@@ -86,6 +80,12 @@
       "languageVersion": "2.3"
     },
     {
+      "name": "characters",
+      "rootUri": "file:///home/fastfist/.pub-cache/hosted/pub.dartlang.org/characters-1.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.6"
+    },
+    {
       "name": "charcode",
       "rootUri": "file:///home/fastfist/.pub-cache/hosted/pub.dartlang.org/charcode-1.1.3",
       "packageUri": "lib/",
@@ -98,6 +98,12 @@
       "languageVersion": "2.3"
     },
     {
+      "name": "clock",
+      "rootUri": "file:///home/fastfist/.pub-cache/hosted/pub.dartlang.org/clock-1.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.0"
+    },
+    {
       "name": "code_builder",
       "rootUri": "file:///home/fastfist/.pub-cache/hosted/pub.dartlang.org/code_builder-3.3.0",
       "packageUri": "lib/",
@@ -105,9 +111,9 @@
     },
     {
       "name": "collection",
-      "rootUri": "file:///home/fastfist/.pub-cache/hosted/pub.dartlang.org/collection-1.14.12",
+      "rootUri": "file:///home/fastfist/.pub-cache/hosted/pub.dartlang.org/collection-1.14.13",
       "packageUri": "lib/",
-      "languageVersion": "2.0"
+      "languageVersion": "2.3"
     },
     {
       "name": "convert",
@@ -140,6 +146,12 @@
       "languageVersion": "2.7"
     },
     {
+      "name": "fake_async",
+      "rootUri": "file:///home/fastfist/.pub-cache/hosted/pub.dartlang.org/fake_async-1.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.2"
+    },
+    {
       "name": "fixnum",
       "rootUri": "file:///home/fastfist/.pub-cache/hosted/pub.dartlang.org/fixnum-0.10.11",
       "packageUri": "lib/",
@@ -147,13 +159,13 @@
     },
     {
       "name": "flutter",
-      "rootUri": "file:///home/fastfist/develop/flutter/packages/flutter",
+      "rootUri": "file:///home/fastfist/devel/flutter/packages/flutter",
       "packageUri": "lib/",
-      "languageVersion": "2.2"
+      "languageVersion": "2.9"
     },
     {
       "name": "flutter_test",
-      "rootUri": "file:///home/fastfist/develop/flutter/packages/flutter_test",
+      "rootUri": "file:///home/fastfist/devel/flutter/packages/flutter_test",
       "packageUri": "lib/",
       "languageVersion": "2.2"
     },
@@ -168,6 +180,12 @@
       "rootUri": "file:///home/fastfist/.pub-cache/hosted/pub.dartlang.org/functional_widget_annotation-0.5.1",
       "packageUri": "lib/",
       "languageVersion": "2.1"
+    },
+    {
+      "name": "get_it",
+      "rootUri": "file:///home/fastfist/.pub-cache/hosted/pub.dartlang.org/get_it-4.0.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.0"
     },
     {
       "name": "glob",
@@ -206,12 +224,6 @@
       "languageVersion": "2.3"
     },
     {
-      "name": "image",
-      "rootUri": "file:///home/fastfist/.pub-cache/hosted/pub.dartlang.org/image-2.1.12",
-      "packageUri": "lib/",
-      "languageVersion": "2.0"
-    },
-    {
       "name": "io",
       "rootUri": "file:///home/fastfist/.pub-cache/hosted/pub.dartlang.org/io-0.3.4",
       "packageUri": "lib/",
@@ -237,9 +249,9 @@
     },
     {
       "name": "matcher",
-      "rootUri": "file:///home/fastfist/.pub-cache/hosted/pub.dartlang.org/matcher-0.12.6",
+      "rootUri": "file:///home/fastfist/.pub-cache/hosted/pub.dartlang.org/matcher-0.12.8",
       "packageUri": "lib/",
-      "languageVersion": "2.2"
+      "languageVersion": "2.4"
     },
     {
       "name": "meta",
@@ -252,6 +264,12 @@
       "rootUri": "file:///home/fastfist/.pub-cache/hosted/pub.dartlang.org/mime-0.9.6+3",
       "packageUri": "lib/",
       "languageVersion": "2.0"
+    },
+    {
+      "name": "nested",
+      "rootUri": "file:///home/fastfist/.pub-cache/hosted/pub.dartlang.org/nested-0.0.4",
+      "packageUri": "lib/",
+      "languageVersion": "2.2"
     },
     {
       "name": "node_interop",
@@ -273,7 +291,7 @@
     },
     {
       "name": "path",
-      "rootUri": "file:///home/fastfist/.pub-cache/hosted/pub.dartlang.org/path-1.6.4",
+      "rootUri": "file:///home/fastfist/.pub-cache/hosted/pub.dartlang.org/path-1.7.0",
       "packageUri": "lib/",
       "languageVersion": "2.0"
     },
@@ -284,16 +302,16 @@
       "languageVersion": "2.1"
     },
     {
-      "name": "petitparser",
-      "rootUri": "file:///home/fastfist/.pub-cache/hosted/pub.dartlang.org/petitparser-2.4.0",
-      "packageUri": "lib/",
-      "languageVersion": "2.4"
-    },
-    {
       "name": "pool",
       "rootUri": "file:///home/fastfist/.pub-cache/hosted/pub.dartlang.org/pool-1.4.0",
       "packageUri": "lib/",
       "languageVersion": "2.0"
+    },
+    {
+      "name": "provider",
+      "rootUri": "file:///home/fastfist/.pub-cache/hosted/pub.dartlang.org/provider-4.1.3",
+      "packageUri": "lib/",
+      "languageVersion": "2.7"
     },
     {
       "name": "pub_semver",
@@ -327,7 +345,7 @@
     },
     {
       "name": "sky_engine",
-      "rootUri": "file:///home/fastfist/develop/flutter/bin/cache/pkg/sky_engine",
+      "rootUri": "file:///home/fastfist/devel/flutter/bin/cache/pkg/sky_engine",
       "packageUri": "lib/",
       "languageVersion": "1.11"
     },
@@ -375,9 +393,9 @@
     },
     {
       "name": "test_api",
-      "rootUri": "file:///home/fastfist/.pub-cache/hosted/pub.dartlang.org/test_api-0.2.15",
+      "rootUri": "file:///home/fastfist/.pub-cache/hosted/pub.dartlang.org/test_api-0.2.17",
       "packageUri": "lib/",
-      "languageVersion": "2.4"
+      "languageVersion": "2.7"
     },
     {
       "name": "timing",
@@ -410,12 +428,6 @@
       "languageVersion": "2.0"
     },
     {
-      "name": "xml",
-      "rootUri": "file:///home/fastfist/.pub-cache/hosted/pub.dartlang.org/xml-3.6.1",
-      "packageUri": "lib/",
-      "languageVersion": "2.6"
-    },
-    {
       "name": "yaml",
       "rootUri": "file:///home/fastfist/.pub-cache/hosted/pub.dartlang.org/yaml-2.2.1",
       "packageUri": "lib/",
@@ -428,7 +440,7 @@
       "languageVersion": "2.7"
     }
   ],
-  "generated": "2020-06-21T20:23:09.605814Z",
+  "generated": "2020-06-28T23:43:11.135248Z",
   "generator": "pub",
-  "generatorVersion": "2.8.4"
+  "generatorVersion": "2.9.0-17.0.dev.flutter-7e72c9ae7e"
 }
