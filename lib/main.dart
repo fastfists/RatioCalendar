@@ -21,9 +21,10 @@ class App extends StatelessWidget {
                   hintStyle: TextStyle(color: Colors.white),
                   filled: true,
                   fillColor: Color(0x9AC4C4C4),
+                  
                 ),
             ),
-            home: LoginPage(),
+            home: CalendarPage(),
         );
     }
 }

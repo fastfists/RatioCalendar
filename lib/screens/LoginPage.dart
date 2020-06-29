@@ -61,6 +61,16 @@ class LoginForm extends StatefulWidget {
 class _LoginFormState extends State<LoginForm> {
 
   final _formKey = GlobalKey<FormState>();
+  TextEditingController _username;
+  TextEditingController _password;
+
+  @override
+  void initState() {
+    _username = TextEditingController(text: "");
+    _password = TextEditingController(text: "");
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,8 +80,10 @@ class _LoginFormState extends State<LoginForm> {
       child: Form(
           key: _formKey,
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               TextFormField(
+                controller: _username,
                 decoration: InputDecoration(
                   hintText: "Username"
                 ),
@@ -84,6 +96,7 @@ class _LoginFormState extends State<LoginForm> {
               ),
               SizedBox(height: 10,),
               TextFormField(
+                controller: _password,
                 decoration: InputDecoration(
                   hintText: "Password"
                 ),
@@ -93,6 +106,22 @@ class _LoginFormState extends State<LoginForm> {
                   }
                   return null;
                 }
+              ),
+              SizedBox(height: 30,),
+              Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(50),
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(blurRadius: 4, offset: Offset(0, 6), color: Color.fromRGBO(0, 0, 0, .25)),
+                    ]
+                  ,
+                  ),
+                child: FlatButton(
+                  onPressed: () {},
+                  child: Text("Register", style: TextStyle(fontSize: 20, color: Colors.black),),
+                ),
               ),
             ],
           ),

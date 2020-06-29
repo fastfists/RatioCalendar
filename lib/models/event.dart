@@ -3,7 +3,7 @@ class Event {
   String description;
   DateTime date;
 
-  Event(this.name, this.description, this.date);
+  Event({this.name, this.description, this.date});
 
   Event.fromJson(Map<String, dynamic> inJson) {
       this.name = inJson["name"];
