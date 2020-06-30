@@ -91,12 +91,10 @@ class EventDetails extends StatelessWidget {
           left: 0,
           child: Container(
             decoration: BoxDecoration(
-              color: Color(0xFF97C7E2),
-              shape: BoxShape.rectangle,
-              borderRadius: BorderRadius.horizontal(left: Radius.circular(30)),
+              color: Color(0xFF000000),
             ),
             margin: EdgeInsets.symmetric(horizontal: 11,vertical: 20),
-            width: 400,
+            width: 375,
             height: 24,
           )
         ),
@@ -155,5 +153,4 @@ class CounterWidget extends StatelessWidget {
       }
     );
   }
-
 }
