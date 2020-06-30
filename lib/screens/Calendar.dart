@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:RatioCalendar/models/event.dart';
 import 'package:flutter/material.dart';
@@ -44,12 +45,97 @@ class _CalendarPageState extends State<CalendarPage> {
 
 }
 
-class EventDetails extends StatelessWidget {
+class EventDetails extends StatefulWidget {
   final Event event;
   EventDetails({Key key, this.event}) : super(key: key);
 
   @override
+  _EventDetailsState createState() => _EventDetailsState();
+}
+
+class _EventDetailsState extends State<EventDetails> 
+    with SingleTickerProviderStateMixin{
+
+  bool flipped = false;
+  AnimationController _controller; 
+
+  @override
+  void initState() {
+    _controller = new AnimationController(
+      vsync: this,
+      duration: Duration(seconds: 1),
+    );
+    _controller.addStatusListener((status) {
+      print(status);
+      if(status == AnimationStatus.completed) {
+        setState(() {
+          flipped = true;
+        });
+      }else if (status == AnimationStatus.dismissed){
+        setState(() {
+          flipped = false;
+        });
+      }
+    });
+
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    var side = (flipped)? backSide(context): frontSide(context);
+    return AnimatedBuilder(
+      animation: _controller,
+      child: side,
+      builder: (context, child) {
+        return Transform(
+                transform: Matrix4.identity()
+                  ..setEntry(3, 2, 0.002)
+                  ..rotateY(pi*_controller.value),
+                  child: GestureDetector(
+                    onTap: (){
+                      if (flipped) {
+                        _controller.reverse();
+                      }else {
+                        _controller.forward();
+                      }
+                    },
+                    child: child,
+                  )
+            );
+      }
+    );
+  }
+
+  @override
+  Widget backSide(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Color.fromRGBO(0, 0, 0, .25),
+            offset: Offset(0,4),
+            blurRadius: 4,
+          )
+        ],
+      ),
+      padding: EdgeInsets.all(19),
+      margin: EdgeInsets.symmetric(horizontal: 11,vertical: 20),  
+      child: Column(
+        children:[
+          Text(widget.event.description),
+          SizedBox(height: 15,),
+          Center(child: CounterWidget(date: widget.event.date,))
+          
+        ]
+      ),    
+    );
+  }
+
+  @override
+  Widget frontSide(BuildContext context) {
     var normal = TextStyle(fontSize: 10);
     var bold = Theme.of(context).textTheme.headline3;
 
@@ -66,16 +152,16 @@ class EventDetails extends StatelessWidget {
                 children: <Widget>[
                   Column(
                     children: [
-                      Text("${this.event.date.day}", style: bold,),
-                      Text("${DateFormat.MMMM().format(this.event.date)}, ${this.event.date.year}"),
+                      Text("${this.widget.event.date.day}", style: bold,),
+                      Text("${DateFormat.MMMM().format(this.widget.event.date)}, ${this.widget.event.date.year}"),
                     ],
                   ),
                   SizedBox(width: 42,),
                   Column(
                     children: <Widget>[
-                      Text("${this.event.name}", style: normal),
+                      Text("${this.widget.event.name}", style: normal),
                       SizedBox(height: 5,),
-                      CounterWidget(date: event.date),
+                      CounterWidget(date: widget.event.date),
                     ],
                   ),
                 ],
@@ -91,7 +177,8 @@ class EventDetails extends StatelessWidget {
           left: 0,
           child: Container(
             decoration: BoxDecoration(
-              color: Color(0xFF000000),
+              color: Color(0xFF97E2D0),
+              borderRadius: BorderRadius.circular(12),
             ),
             margin: EdgeInsets.symmetric(horizontal: 11,vertical: 20),
             width: 375,
