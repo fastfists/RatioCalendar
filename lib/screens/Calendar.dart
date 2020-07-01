@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:RatioCalendar/clips.dart';
 import 'package:RatioCalendar/models/event.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -34,7 +35,7 @@ class _CalendarPageState extends State<CalendarPage> {
               color: Color.fromRGBO(11, 105, 157, .56),
             ),
             child: ListView.builder(
-              itemCount: 3,
+              itemCount: 10,
               itemBuilder: (context, idx) {
                 return EventDetails(event: event);
               }
@@ -63,7 +64,7 @@ class _EventDetailsState extends State<EventDetails>
   void initState() {
     _controller = new AnimationController(
       vsync: this,
-      duration: Duration(seconds: 1),
+      duration: Duration(milliseconds: 500),
     );
     _controller.addStatusListener((status) {
       print(status);
@@ -83,54 +84,64 @@ class _EventDetailsState extends State<EventDetails>
 
   @override
   Widget build(BuildContext context) {
-    var side = (flipped)? backSide(context): frontSide(context);
     return AnimatedBuilder(
       animation: _controller,
-      child: side,
       builder: (context, child) {
+        var side = (_controller.value > 0.5)? backSide(context): frontSide(context);
         return Transform(
-                transform: Matrix4.identity()
-                  ..setEntry(3, 2, 0.002)
-                  ..rotateY(pi*_controller.value),
-                  child: GestureDetector(
-                    onTap: (){
-                      if (flipped) {
-                        _controller.reverse();
-                      }else {
-                        _controller.forward();
-                      }
-                    },
-                    child: child,
-                  )
-            );
+            alignment: FractionalOffset.center,
+            transform: Matrix4.identity()
+              ..setEntry(3, 2, 0.002)
+              ..rotateX(pi*_controller.value),
+              child: GestureDetector(
+                onTap: (){
+                  if (flipped) {
+                    _controller.reverse();
+                  } else {
+                    _controller.forward();
+                  }
+                },
+                child: Container(
+                  width: 500,
+                  height: 250,
+                  child: side
+                  ),
+              )
+        );
       }
     );
   }
 
   @override
   Widget backSide(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Color.fromRGBO(0, 0, 0, .25),
-            offset: Offset(0,4),
-            blurRadius: 4,
-          )
-        ],
+    return Transform(
+      transform: Matrix4.identity()
+        ..setEntry(3, 2, 0.002)
+        ..rotateX(pi),
+      alignment: FractionalOffset.center,
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(12),
+            boxShadow: [
+              BoxShadow(
+                color: Color.fromRGBO(0, 0, 0, .25),
+                offset: Offset(0,4),
+                blurRadius: 4,
+              )
+            ],
+          ),
+          padding: EdgeInsets.all(19),
+          margin: EdgeInsets.symmetric(horizontal: 11,vertical: 20),  
+          child: Column(
+            children:[
+              Text(widget.event.description),
+              SizedBox(height: 15,),
+              Center(child: CounterWidget(date: widget.event.date,))
+              
+            ]
+        ),    
       ),
-      padding: EdgeInsets.all(19),
-      margin: EdgeInsets.symmetric(horizontal: 11,vertical: 20),  
-      child: Column(
-        children:[
-          Text(widget.event.description),
-          SizedBox(height: 15,),
-          Center(child: CounterWidget(date: widget.event.date,))
-          
-        ]
-      ),    
     );
   }
 
@@ -175,14 +186,17 @@ class _EventDetailsState extends State<EventDetails>
         Positioned(
           top: 0,
           left: 0,
-          child: Container(
-            decoration: BoxDecoration(
-              color: Color(0xFF97E2D0),
-              borderRadius: BorderRadius.circular(12),
+          right: 0,
+          child: ClipPath(
+            clipper: SemiCircleClipper(),
+            child: Container(
+              decoration: BoxDecoration(
+                color: Color(0xFF97E2D0),
+              ),
+              margin: EdgeInsets.symmetric(horizontal: 11,vertical: 20),
+              width: double.infinity,
+              height: 30,
             ),
-            margin: EdgeInsets.symmetric(horizontal: 11,vertical: 20),
-            width: 375,
-            height: 24,
           )
         ),
       ],
