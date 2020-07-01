@@ -8,7 +8,7 @@ class User {
   String email;
   String password;
 
-  List<Event> events = [];
+  List<Event> events = null;
 
   setJsonInfo(Map<String, dynamic> inJson){
     this.username = inJson["username"];
@@ -22,5 +22,7 @@ class User {
   User.fromJson(Map<String, dynamic> inJson){
     this.username = inJson["username"];
     this.email = inJson["email"];
+    this.slug = inJson["slug"];
+    this.password = inJson["password"];
   }
 }

@@ -12,7 +12,6 @@ enum LoginStatus {
   Authenticating,
   Unauthenticated,
   Uninitialized,
-  Expired,
 }
 
 class Auth extends ChangeNotifier{
@@ -22,9 +21,9 @@ class Auth extends ChangeNotifier{
   factory Auth() => _singleton;
   Auth._internal();
 
-  User _user;
+  User _user = null;
   String token;
-  LoginStatus _status = LoginStatus.Uninitialized;
+  LoginStatus _status = LoginStatus.Unauthenticated;
   
   set status(LoginStatus newStatus) {
     var _status = newStatus;
@@ -34,32 +33,59 @@ class Auth extends ChangeNotifier{
   LoginStatus get status => _status;
 
   Future<bool> login(String username, String password) async {
-    var jsonBody = {
+    var jsonBody = json.encode({
       "username": username,
       "password": password,
+    });
+    var headers = {
+      "Content-Type": "application/json",
     };
     _status = LoginStatus.Authenticating;
     notifyListeners();
 
-    var req = await http.post("${host}/user/login", body: jsonBody);
-    var responseJson = json.decode(req.body);
-
-    if (responseJson["status"] == "success"){
+    var req = await http.post("${host}/api/user/login", body: jsonBody, headers: headers);
+    try {
+      var responseJson = json.decode(req.body);
+      print(req.body);
+      if(req.statusCode != 200){
+        return false;
+      }
       _user = User.fromJson(responseJson);
-      _user.events = await getEvents(_user);
       _status = LoginStatus.Authenticated;
       notifyListeners();
       return true;
     }
+    catch(e) {
+      print(req.body);
+      return false;
+    }
     return false;
   }
 
-  Future<List<Event>> getEvents(User user) async {
-    var req = await http.get("${host}/user/login");
+  Future<List<Event>> getEvents() async {
+    if (_user == null) {
+      throw Error;
+    }
+    if (_user.events != null){
+      return _user.events;
+    }
+
+    var headers = {
+      "Authorization" : _user.password,
+    };
+
+    var req = await http.get("${host}/api/events", headers: headers);
     var responseJson = json.decode(req.body);
 
-    if (responseJson["status"] == "success"){
-      return responseJson["events"];
+    if (req.statusCode == 200){
+      var events = <Event>[];
+      responseJson["events"].forEach((element) {
+        events.add(Event.fromJson(element));
+      });
+      
+      _user.events = events;
+      print(events);
+      return events;
     }
   }
 
@@ -67,7 +93,11 @@ class Auth extends ChangeNotifier{
 
   }
 
-  Future<User> getUser() {
+  User getUser() {
+    if (_user != null) {
+      throw Error;
+    }
+    return _user;
   }
 
 }

@@ -1,10 +1,11 @@
 import 'package:RatioCalendar/screens/Calendar.dart';
-import 'package:RatioCalendar/service_locator.dart';
 import 'package:RatioCalendar/screens/LoginPage.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'services/auth.dart';
 
 void main() {
-  setupLocator();
   runApp(App());
 }
 
@@ -24,8 +25,42 @@ class App extends StatelessWidget {
                   
                 ),
             ),
-            home: CalendarPage(),
+            home: HomePage(),
         );
     }
 }
 
+class HomePage extends StatelessWidget {
+  const HomePage({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      create: (_) => Auth(),
+      child: Consumer<Auth>(
+        builder: (context, Auth auth, _) {
+          switch(auth.status) {
+            case LoginStatus.Uninitialized:
+              return Splash();
+            case LoginStatus.Unauthenticated:
+            case LoginStatus.Authenticating:
+              return LoginPage();
+            case LoginStatus.Authenticated:
+              return CalendarPage();
+          }
+        }
+      ),
+    );
+  }
+}
+
+class Splash extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      child: Center(
+        child: Text("Splash Screen"),
+      ),
+    );
+  }
+}

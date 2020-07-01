@@ -3,8 +3,10 @@ import 'dart:math';
 
 import 'package:RatioCalendar/clips.dart';
 import 'package:RatioCalendar/models/event.dart';
+import 'package:RatioCalendar/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:timer_builder/timer_builder.dart';
 
 class CalendarPage extends StatefulWidget {
@@ -34,12 +36,32 @@ class _CalendarPageState extends State<CalendarPage> {
             decoration: BoxDecoration(
               color: Color.fromRGBO(11, 105, 157, .56),
             ),
-            child: ListView.builder(
-              itemCount: 10,
-              itemBuilder: (context, idx) {
-                return EventDetails(event: event);
-              }
-            ),
+            child: Consumer<Auth>(
+              builder: (BuildContext context, Auth value, Widget child) { 
+                return FutureBuilder(
+                  future: value.getEvents(),
+                  builder: (BuildContext context, AsyncSnapshot<List<Event>> snapshot) { 
+                    switch (snapshot.connectionState) {
+                      case ConnectionState.none:
+                        return Text("null????");
+                        break;
+                      case ConnectionState.waiting:
+                        return Text("waiting");
+                      case ConnectionState.active:
+                        return Text("active");
+                      case ConnectionState.done:
+                        print(snapshot.data);
+                        return ListView.builder(
+                          itemCount: snapshot.data.length,
+                          itemBuilder: (context, idx) {
+                            return EventDetails(event: snapshot.data[idx]);
+                          }
+                        );
+                    }
+                  },
+                );
+              },
+            )
           ),
     );
   }

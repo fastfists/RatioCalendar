@@ -1,47 +1,26 @@
-import 'package:RatioCalendar/api/api.dart';
-import 'package:RatioCalendar/user.dart';
-import 'package:RatioCalendar/event.dart';
+import 'dart:convert';
+
+import 'package:RatioCalendar/models/event.dart';
+import 'package:http/http.dart' as http;
+import 'package:RatioCalendar/services/auth.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 main() {
-  test("Returns a User successfully in Sequence", (){
-    Api("fastfist", "fastfist22").loginUser()
-    .then((value) {
-      expect(value, isA<User>());
-    });
-    }
-  );
+  test("Logs in the user properly", () async{
 
-  test("Returns a User successfully in Sequence", (){
-
-    List<Event> _events = [];
-    Api("fastfist", "fastfist22").loginUser()
-        .then((user) {
-          print(user);
-          if(user != null) Api.getUserEvents(user);
-        })
-        .then((events) {
-          _events = events;
-          expect(events, isNotNull);
-        })
-        .catchError(print);
-    
-    expect(_events, isNotNull);
+    var auth = Auth();
+    bool success = await auth.login("fastfist", "fastfist22");
+    expect(success, true);
   });
 
-  test("Returns a User successfully in Sequence", (){
-    List<Event> _events = [];
-    Api("fastfist", "fastfist22").loginUser()
-        .then((user) {
-          print(user);
-          if(user != null) Api.getUserEvents(user);
-        })
-        .then((events) {
+  test("Gets user events", () async{
 
-          expect(events, isA<List<Event>>());
-          expect(events, isNotNull);
-        })
-        .catchError(print);
-    }
-  );
+    var auth = Auth();
+
+    bool success = await auth.login("fastfist", "fastfist22");
+    expect(success, true);
+
+    List<Event> events = await auth.getEvents();
+    expect(events, isNot(null));
+  });
 }

@@ -1,6 +1,8 @@
 
+import 'package:RatioCalendar/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({Key key}) : super(key: key);
@@ -73,6 +75,22 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   @override
+  void dispose() {
+    _username.dispose();
+    _password.dispose();
+    super.dispose();
+  }
+
+  submitForm() async {
+    var authentication = Provider.of<Auth>(context, listen: false);
+    print(_username.text);
+    print(_password.text);
+    if (!await authentication.login(_username.text, _password.text)){
+      print("someting bad happend");
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Container(
@@ -119,7 +137,7 @@ class _LoginFormState extends State<LoginForm> {
                   ,
                   ),
                 child: FlatButton(
-                  onPressed: () {},
+                  onPressed: () async {await submitForm();},
                   child: Text("Register", style: TextStyle(fontSize: 20, color: Colors.black),),
                 ),
               ),
