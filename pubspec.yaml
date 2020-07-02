@@ -28,6 +28,7 @@ dependencies:
   provider:
   intl:
   timer_builder:
+  date_field:
 
 
   # The following adds the Cupertino Icons font to your application.

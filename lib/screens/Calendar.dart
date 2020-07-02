@@ -3,7 +3,9 @@ import 'dart:math';
 
 import 'package:RatioCalendar/clips.dart';
 import 'package:RatioCalendar/models/event.dart';
+import 'package:RatioCalendar/screens/AddEventPage.dart';
 import 'package:RatioCalendar/services/auth.dart';
+import 'package:RatioCalendar/widgets/bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +19,6 @@ class CalendarPage extends StatefulWidget {
 }
 
 class _CalendarPageState extends State<CalendarPage> {
-  Future<List<Event>> _eventFuture;
 
   @override
   void initState() {
@@ -27,11 +28,26 @@ class _CalendarPageState extends State<CalendarPage> {
   @override
   Widget build(BuildContext context) {
     Event event = Event(
-      name: "8th grade staar test with my mom and friends",
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Risus sed sed viverra pharetra diam mattis elementum sapien pretium. Nunc, pellentesque at nulla in. Dolor vel enim massa facilisis tristique et diam. Pulvinar cras diam non consequat pulvinar feugiat massa.",
+      name: "8th grade staar test with my mom and friendsfdsd",
+      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur tetur adipiscing tetur adipiscing adipiscing elit. Risus sed sed viverra pharetra diam mattis elementum sapien pretium. Nunc, pellentesque at nulla in. Dolor vel enim massa facilisis tristique et diam. Pulvinar cras diam non consequat pulvinar feugiat massa.",
       date: DateTime(2020, 07, 26),
     );
     return Scaffold(
+          bottomNavigationBar: BottomNavBar(),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              Navigator.push(
+                context, 
+                MaterialPageRoute(
+                  builder: (context) => AddEventPage()
+                ),
+              );
+            },
+            backgroundColor: Colors.blue[200],
+            foregroundColor: Colors.white, 
+            child:Icon(Icons.add),
+            ),
+          floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
           body: Container(
             decoration: BoxDecoration(
               color: Color.fromRGBO(11, 105, 157, .56),
@@ -50,11 +66,11 @@ class _CalendarPageState extends State<CalendarPage> {
                       case ConnectionState.active:
                         return Text("active");
                       case ConnectionState.done:
-                        print(snapshot.data);
+                        print(snapshot.data.length.toDouble());
                         return ListView.builder(
                           itemCount: snapshot.data.length,
                           itemBuilder: (context, idx) {
-                            return EventDetails(event: snapshot.data[idx]);
+                            return EventDetails(event:snapshot.data[idx] );
                           }
                         );
                     }
@@ -86,7 +102,7 @@ class _EventDetailsState extends State<EventDetails>
   void initState() {
     _controller = new AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 500),
+      duration: Duration(milliseconds: 200),
     );
     _controller.addStatusListener((status) {
       print(status);
@@ -124,9 +140,9 @@ class _EventDetailsState extends State<EventDetails>
                   }
                 },
                 child: Container(
-                  width: 500,
-                  height: 250,
-                  child: side
+                    child: side,
+                    width: 500,
+                    height: 190,
                   ),
               )
         );
@@ -155,14 +171,7 @@ class _EventDetailsState extends State<EventDetails>
           ),
           padding: EdgeInsets.all(19),
           margin: EdgeInsets.symmetric(horizontal: 11,vertical: 20),  
-          child: Column(
-            children:[
-              Text(widget.event.description),
-              SizedBox(height: 15,),
-              Center(child: CounterWidget(date: widget.event.date,))
-              
-            ]
-        ),    
+          child: Text(widget.event.description),    
       ),
     );
   }
@@ -176,7 +185,7 @@ class _EventDetailsState extends State<EventDetails>
       children: <Widget>[
         Container(
               padding: EdgeInsets.all(19),
-              margin: EdgeInsets.symmetric(horizontal: 11,vertical: 20),
+              margin: EdgeInsets.symmetric(horizontal: 11,vertical: 20),  
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
                 color: Color(0xFFFFFFFF),
@@ -185,26 +194,31 @@ class _EventDetailsState extends State<EventDetails>
                 children: <Widget>[
                   Column(
                     children: [
+                      SizedBox(height:20),
                       Text("${this.widget.event.date.day}", style: bold,),
-                      Text("${DateFormat.MMMM().format(this.widget.event.date)}, ${this.widget.event.date.year}"),
+                      Text("${DateFormat.MMM().format(this.widget.event.date)}, ${this.widget.event.date.year}"),
                     ],
                   ),
                   SizedBox(width: 42,),
-                  Column(
-                    children: <Widget>[
-                      Text("${this.widget.event.name}", style: normal),
-                      SizedBox(height: 5,),
-                      CounterWidget(date: widget.event.date),
-                    ],
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        SizedBox(height:25),
+                        Text("${this.widget.event.name}", style: Theme.of(context).textTheme.headline4.copyWith(color: Colors.black, fontSize: 20)),
+                        Spacer(),
+                        CounterWidget(date: widget.event.date),
+                      ],
+                    ),
                   ),
                 ],
           ),
         ),
-        Positioned(
-          bottom: 30,
-          right: 20,
-          child: Icon(Icons.chevron_right),
-        ),
+        // Positioned(
+        //   bottom: 30,
+        //   right: 20,
+        //   child: Icon(Icons.chevron_right),
+        // ),
         Positioned(
           top: 0,
           left: 0,
