@@ -1,1 +1,1 @@
-{"mName":"debug","mStoreFile":"/home/fastfist/.android/debug.keystore","mStorePassword":"android","mKeyAlias":"AndroidDebugKey","mKeyPassword":"android","mStoreType":"jks","mV1SigningEnabled":true,"mV2SigningEnabled":true}
+{"mName":"debug","mStoreFile":"/home/fastfist/Programs/RatioCalendar/android/app/key.jks","mStorePassword":"fastfist22","mKeyAlias":"androiddebugkey","mKeyPassword":"fastfist22","mStoreType":"jks","mV1SigningEnabled":true,"mV2SigningEnabled":true}

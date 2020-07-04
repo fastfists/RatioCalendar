@@ -1,4 +1,3 @@
-
 import 'package:RatioCalendar/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -25,23 +24,23 @@ class LoginPage extends StatelessWidget {
               height: size.height,
               width: size.width,
               decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
+                  gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
                     Color(0xFF92C0C2),
                     Colors.white.withAlpha(0),
                   ],
-                  stops: [
+                      stops: [
                     .16,
                     .78
-                  ]
-                )
-              ),
+                  ])),
             ),
             Column(
               children: <Widget>[
-                SizedBox(height: 200,),
+                SizedBox(
+                  height: 200,
+                ),
                 LoginForm(),
               ],
             ),
@@ -49,7 +48,6 @@ class LoginPage extends StatelessWidget {
         ),
       ),
     );
-
   }
 }
 
@@ -61,7 +59,6 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
-
   final _formKey = GlobalKey<FormState>();
   TextEditingController _username;
   TextEditingController _password;
@@ -85,7 +82,7 @@ class _LoginFormState extends State<LoginForm> {
     var authentication = Provider.of<Auth>(context, listen: false);
     print(_username.text);
     print(_password.text);
-    if (!await authentication.login(_username.text, _password.text)){
+    if (!await authentication.login(_username.text, _password.text)) {
       print("someting bad happend");
     }
   }
@@ -96,54 +93,69 @@ class _LoginFormState extends State<LoginForm> {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 50),
       child: Form(
-          key: _formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              TextFormField(
+        key: _formKey,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            TextFormField(
                 controller: _username,
                 decoration: InputDecoration(
-                  hintText: "Username"
+                  hintText: "Username",
+                  hintStyle: TextStyle(color: Colors.white),
+                  filled: true,
+                  fillColor: Color(0x9AC4C4C4),
                 ),
                 validator: (value) {
                   if (value.isEmpty) {
                     return "Please enter a username";
                   }
                   return null;
-                }
-              ),
-              SizedBox(height: 10,),
-              TextFormField(
+                }),
+            SizedBox(
+              height: 10,
+            ),
+            TextFormField(
                 controller: _password,
                 decoration: InputDecoration(
-                  hintText: "Password"
+                  hintText: "Password",
+                  hintStyle: TextStyle(color: Colors.white),
+                  filled: true,
+                  fillColor: Color(0x9AC4C4C4),
                 ),
                 validator: (value) {
                   if (value.isEmpty) {
                     return "Please enter a password";
                   }
                   return null;
-                }
+                }),
+            SizedBox(
+              height: 30,
+            ),
+            Container(
+              width: double.infinity,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(50),
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                      blurRadius: 4,
+                      offset: Offset(0, 6),
+                      color: Color.fromRGBO(0, 0, 0, .25)),
+                ],
               ),
-              SizedBox(height: 30,),
-              Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(50),
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(blurRadius: 4, offset: Offset(0, 6), color: Color.fromRGBO(0, 0, 0, .25)),
-                    ]
-                  ,
-                  ),
-                child: FlatButton(
-                  onPressed: () async {await submitForm();},
-                  child: Text("Register", style: TextStyle(fontSize: 20, color: Colors.black),),
+              child: FlatButton(
+                onPressed: () async {
+                  await submitForm();
+                },
+                child: Text(
+                  "Register",
+                  style: TextStyle(fontSize: 20, color: Colors.black),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
+      ),
     );
   }
 }

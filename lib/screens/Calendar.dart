@@ -32,6 +32,7 @@ class _CalendarPageState extends State<CalendarPage> {
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur tetur adipiscing tetur adipiscing adipiscing elit. Risus sed sed viverra pharetra diam mattis elementum sapien pretium. Nunc, pellentesque at nulla in. Dolor vel enim massa facilisis tristique et diam. Pulvinar cras diam non consequat pulvinar feugiat massa.",
       date: DateTime(2020, 07, 26),
     );
+
     return Scaffold(
           bottomNavigationBar: BottomNavBar(),
           floatingActionButton: FloatingActionButton(

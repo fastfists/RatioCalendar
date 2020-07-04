@@ -29,6 +29,7 @@ dependencies:
   intl:
   timer_builder:
   date_field:
+  google_sign_in:
 
 
   # The following adds the Cupertino Icons font to your application.

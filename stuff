@@ -1,0 +1,38 @@
+Keystore type: jks
+Keystore provider: SUN
+
+Your keystore contains 1 entry
+
+Alias name: androiddebugkey
+Creation date: Jul 3, 2020
+Entry type: PrivateKeyEntry
+Certificate chain length: 1
+Certificate[1]:
+Owner: CN=Denzell Ford, OU=operation, O=zorro, L=Grand Praraie, ST=Texas, C=US
+Issuer: CN=Denzell Ford, OU=operation, O=zorro, L=Grand Praraie, ST=Texas, C=US
+Serial number: 66136179
+Valid from: Fri Jul 03 11:28:37 CDT 2020 until: Tue Nov 19 10:28:37 CST 2047
+Certificate fingerprints:
+	 MD5:  E3:27:B0:C9:F0:C2:58:83:F7:57:E1:B7:89:DE:43:6C
+	 SHA1: B1:79:37:FF:5E:20:69:45:92:38:EB:FE:82:7E:79:B9:38:7D:CA:30
+	 SHA256: 72:71:23:D5:A8:9E:07:EB:A1:9A:9B:A1:BD:41:AD:7B:2B:13:66:14:4E:A3:0A:48:30:B7:9B:34:5B:2C:D6:50
+Signature algorithm name: SHA256withRSA
+Subject Public Key Algorithm: 2048-bit RSA key
+Version: 3
+
+Extensions: 
+
+#1: ObjectId: 2.5.29.14 Criticality=false
+SubjectKeyIdentifier [
+KeyIdentifier [
+0000: 48 C8 AC 82 F6 41 CD 19   17 A5 61 EA 6E 3A 04 AA  H....A....a.n:..
+0010: 89 A0 83 7A                                        ...z
+]
+]
+
+
+
+*******************************************
+*******************************************
+
+

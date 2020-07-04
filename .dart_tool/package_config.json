@@ -164,6 +164,12 @@
       "languageVersion": "2.2"
     },
     {
+      "name": "flutter_web_plugins",
+      "rootUri": "file:///home/fastfist/develop/flutter/packages/flutter_web_plugins",
+      "packageUri": "lib/",
+      "languageVersion": "2.0"
+    },
+    {
       "name": "functional_widget",
       "rootUri": "file:///home/fastfist/.pub-cache/hosted/pub.dartlang.org/functional_widget-0.7.3",
       "packageUri": "lib/",
@@ -180,6 +186,24 @@
       "rootUri": "file:///home/fastfist/.pub-cache/hosted/pub.dartlang.org/glob-1.2.0",
       "packageUri": "lib/",
       "languageVersion": "2.1"
+    },
+    {
+      "name": "google_sign_in",
+      "rootUri": "file:///home/fastfist/.pub-cache/hosted/pub.dartlang.org/google_sign_in-4.5.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.1"
+    },
+    {
+      "name": "google_sign_in_platform_interface",
+      "rootUri": "file:///home/fastfist/.pub-cache/hosted/pub.dartlang.org/google_sign_in_platform_interface-1.1.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.1"
+    },
+    {
+      "name": "google_sign_in_web",
+      "rootUri": "file:///home/fastfist/.pub-cache/hosted/pub.dartlang.org/google_sign_in_web-0.9.1+1",
+      "packageUri": "lib/",
+      "languageVersion": "2.6"
     },
     {
       "name": "graphs",
@@ -458,7 +482,7 @@
       "languageVersion": "2.7"
     }
   ],
-  "generated": "2020-07-02T12:34:05.884873Z",
+  "generated": "2020-07-03T19:29:37.794425Z",
   "generator": "pub",
   "generatorVersion": "2.8.4"
 }
