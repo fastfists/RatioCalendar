@@ -3,6 +3,8 @@ hooks/
 node_modules/
 platforms/
 build/
+.vscode/
+.dart_tool/
 
 # NativeScript Template
 *.js.map
