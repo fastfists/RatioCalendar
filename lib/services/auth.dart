@@ -134,7 +134,7 @@ class Auth extends ChangeNotifier{
   }
 
   User getUser() {
-    if (_user != null) {
+    if (_user == null) {
       throw Error;
     }
     return _user;

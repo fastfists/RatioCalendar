@@ -5,11 +5,12 @@ import 'package:RatioCalendar/clips.dart';
 import 'package:RatioCalendar/models/event.dart';
 import 'package:RatioCalendar/screens/AddEventPage.dart';
 import 'package:RatioCalendar/services/auth.dart';
-import 'package:RatioCalendar/widgets/bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:timer_builder/timer_builder.dart';
+
+import 'Settings.dart';
 
 class CalendarPage extends StatefulWidget {
   CalendarPage({Key key}) : super(key: key);
@@ -20,21 +21,42 @@ class CalendarPage extends StatefulWidget {
 
 class _CalendarPageState extends State<CalendarPage> {
 
+  var _selectedIndex = 0;
+
   @override
   void initState() {
     super.initState();
   }
 
+  void onItemTap(index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    Event event = Event(
-      name: "8th grade staar test with my mom and friendsfdsd",
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur tetur adipiscing tetur adipiscing adipiscing elit. Risus sed sed viverra pharetra diam mattis elementum sapien pretium. Nunc, pellentesque at nulla in. Dolor vel enim massa facilisis tristique et diam. Pulvinar cras diam non consequat pulvinar feugiat massa.",
-      date: DateTime(2020, 07, 26),
-    );
-
+    var bottomBarWidgets = [
+      CalendarView(),
+      SettingsView(),
+    ];
     return Scaffold(
-          bottomNavigationBar: BottomNavBar(),
+          bottomNavigationBar: BottomNavigationBar(
+            currentIndex: _selectedIndex,
+            onTap: onItemTap,
+            items: const <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                icon: Icon(Icons.calendar_today),
+                title: Text('Calendar'),
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.settings),
+                title: Text('Settings'),
+              ),
+            ],
+            selectedItemColor: Colors.white,
+            backgroundColor: Color(0xFF97E2E2),
+          ),
           floatingActionButton: FloatingActionButton(
             onPressed: () {
               Navigator.push(
@@ -53,36 +75,47 @@ class _CalendarPageState extends State<CalendarPage> {
             decoration: BoxDecoration(
               color: Color.fromRGBO(11, 105, 157, .56),
             ),
-            child: Consumer<Auth>(
-              builder: (BuildContext context, Auth value, Widget child) { 
-                return FutureBuilder(
-                  future: value.getEvents(),
-                  builder: (BuildContext context, AsyncSnapshot<List<Event>> snapshot) { 
-                    switch (snapshot.connectionState) {
-                      case ConnectionState.none:
-                        return Text("null????");
-                        break;
-                      case ConnectionState.waiting:
-                        return Text("waiting");
-                      case ConnectionState.active:
-                        return Text("active");
-                      case ConnectionState.done:
-                        print(snapshot.data.length.toDouble());
-                        return ListView.builder(
-                          itemCount: snapshot.data.length,
-                          itemBuilder: (context, idx) {
-                            return EventDetails(event:snapshot.data[idx] );
-                          }
-                        );
-                    }
-                  },
-                );
-              },
-            )
+            child: bottomBarWidgets[_selectedIndex],
           ),
     );
   }
 
+}
+
+class CalendarView extends StatelessWidget {
+  const CalendarView({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<Auth>(
+      builder: (BuildContext context, Auth value, Widget child) { 
+        return FutureBuilder(
+          future: value.getEvents(),
+          builder: (BuildContext context, AsyncSnapshot<List<Event>> snapshot) { 
+            switch (snapshot.connectionState) {
+              case ConnectionState.none:
+                return Text("null");
+                break;
+              case ConnectionState.waiting:
+                return Text("waiting");
+              case ConnectionState.active:
+                return Text("active");
+              case ConnectionState.done:
+                print(snapshot.data.length.toDouble());
+                return ListView.builder(
+                  itemCount: snapshot.data.length,
+                  itemBuilder: (context, idx) {
+                    return EventDetails(event:snapshot.data[idx] );
+                  }
+                );
+            }
+          },
+        );
+      },
+    );
+  }
 }
 
 class EventDetails extends StatefulWidget {
