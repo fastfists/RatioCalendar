@@ -3,9 +3,21 @@ import "dart:async";
 import 'package:RatioCalendar/models/event.dart';
 import 'package:RatioCalendar/models/user.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 
 String host = "https://ratiocal.herokuapp.com";
+
+  
+String value = await storage.read(key: key);
+
+Map<String, String> allValues = await storage.readAll();
+
+await storage.delete(key: key);
+
+await storage.deleteAll();
+
+await storage.write(key: key, value: value);
 
 enum LoginStatus {
   Authenticated,
@@ -24,7 +36,9 @@ class Auth extends ChangeNotifier{
   User _user = null;
   String token;
   LoginStatus _status = LoginStatus.Unauthenticated;
-  
+  String statusError;
+  final storage = FlutterSecureStorage();
+
   set status(LoginStatus newStatus) {
     var _status = newStatus;
     notifyListeners();
@@ -40,26 +54,52 @@ class Auth extends ChangeNotifier{
     var headers = {
       "Content-Type": "application/json",
     };
-    _status = LoginStatus.Authenticating;
-    notifyListeners();
+    status = LoginStatus.Authenticating;
 
     var req = await http.post("${host}/api/user/login", body: jsonBody, headers: headers);
     try {
-      var responseJson = json.decode(req.body);
+      Map responseJson = json.decode(req.body);
       print(req.body);
       if(req.statusCode != 200){
+        status = LoginStatus.Authenticating;
+        if ( responseJson.containsValue("error") ){
+          statusError = responseJson["error"];
+        }
         return false;
       }
       _user = User.fromJson(responseJson);
-      _status = LoginStatus.Authenticated;
-      notifyListeners();
+      status = LoginStatus.Authenticated;
+      await storage.write(key: "token", value: _user.password);
       return true;
     }
     catch(e) {
       print(req.body);
       return false;
     }
-    return false;
+  }
+
+  Future<bool> _loginFromStorage() async {
+    var password = await storage.read(key: "token");
+
+    var headers = {
+      "Content-Type": "application/json",
+      "Authorization" : password,
+    };
+
+    var req = await http.get("${host}/api/user/login");
+
+    try {
+      Map responseJson = json.decode(req.body);
+      if(req.statusCode != 200){
+        return false;
+      }
+      _user = User.fromJson(responseJson);
+      return true;
+    }
+    catch(e) {
+      print(req.body);
+      return false;
+    }
   }
 
   Future<List<Event>> getEvents() async {

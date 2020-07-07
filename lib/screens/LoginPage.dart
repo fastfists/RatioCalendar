@@ -52,7 +52,9 @@ class LoginPage extends StatelessWidget {
 }
 
 class LoginForm extends StatefulWidget {
-  LoginForm({Key key}) : super(key: key);
+
+  LoginStatus status;
+  LoginForm({Key key, this.status}) : super(key: key);
 
   @override
   _LoginFormState createState() => _LoginFormState();
@@ -131,27 +133,38 @@ class _LoginFormState extends State<LoginForm> {
             SizedBox(
               height: 30,
             ),
-            Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(50),
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                      blurRadius: 4,
-                      offset: Offset(0, 6),
-                      color: Color.fromRGBO(0, 0, 0, .25)),
-                ],
-              ),
-              child: FlatButton(
-                onPressed: () async {
-                  await submitForm();
-                },
-                child: Text(
-                  "Register",
-                  style: TextStyle(fontSize: 20, color: Colors.black),
-                ),
-              ),
+            Consumer<Auth>(
+              builder: (context, auth, _) {
+                return Column(
+                  children: <Widget>[
+
+                  if ( auth.status == LoginStatus.Authenticating) CircularProgressIndicator(),
+                  if ( auth.status == LoginStatus.Unauthenticated)
+                    Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(50),
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                              blurRadius: 4,
+                              offset: Offset(0, 6),
+                              color: Color.fromRGBO(0, 0, 0, .25)),
+                        ],
+                      ),
+                      child: FlatButton(
+                        onPressed: () async {
+                          await submitForm();
+                        },
+                        child: Text(
+                          "Register",
+                          style: TextStyle(fontSize: 20, color: Colors.black),
+                        ),
+                      ),
+                    )
+                }
+                  ],
+              }
             ),
           ],
         ),

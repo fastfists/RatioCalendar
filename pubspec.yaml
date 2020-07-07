@@ -22,7 +22,6 @@ environment:
 
 dependencies:
   http: ^0.12.1
-  functional_widget_annotation: ^0.5.1
   flutter:
     sdk: flutter
   provider:
@@ -30,6 +29,7 @@ dependencies:
   timer_builder:
   date_field:
   google_sign_in:
+  flutter_secure_storage:
 
 
   # The following adds the Cupertino Icons font to your application.
