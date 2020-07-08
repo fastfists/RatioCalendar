@@ -52,7 +52,6 @@ class LoginPage extends StatelessWidget {
 }
 
 class LoginForm extends StatefulWidget {
-
   LoginStatus status;
   LoginForm({Key key, this.status}) : super(key: key);
 
@@ -69,7 +68,6 @@ class _LoginFormState extends State<LoginForm> {
   void initState() {
     _username = TextEditingController(text: "");
     _password = TextEditingController(text: "");
-
     super.initState();
   }
 
@@ -91,7 +89,6 @@ class _LoginFormState extends State<LoginForm> {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 50),
       child: Form(
@@ -133,13 +130,12 @@ class _LoginFormState extends State<LoginForm> {
             SizedBox(
               height: 30,
             ),
-            Consumer<Auth>(
-              builder: (context, auth, _) {
-                return Column(
-                  children: <Widget>[
-
-                  if ( auth.status == LoginStatus.Authenticating) CircularProgressIndicator(),
-                  if ( auth.status == LoginStatus.Unauthenticated)
+            Consumer<Auth>(builder: (context, auth, _) {
+              return Column(
+                children: <Widget>[
+                  if (auth.status == LoginStatus.Authenticating)
+                    CircularProgressIndicator(),
+                  if (auth.status == LoginStatus.Unauthenticated)
                     Container(
                       width: double.infinity,
                       decoration: BoxDecoration(
@@ -162,13 +158,13 @@ class _LoginFormState extends State<LoginForm> {
                         ),
                       ),
                     )
-                }
-                  ],
-              }
-            ),
+                ],
+              );
+            }),
           ],
         ),
       ),
     );
   }
+
 }

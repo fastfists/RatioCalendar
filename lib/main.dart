@@ -1,6 +1,6 @@
 import 'package:RatioCalendar/screens/Calendar.dart';
 import 'package:RatioCalendar/screens/LoginPage.dart';
-import 'package:RatioCalendar/services/google.dart';
+// import 'package:RatioCalendar/services/google.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -25,26 +25,26 @@ class App extends StatelessWidget {
   }
 }
 
-class GooglePageSignIn extends StatelessWidget {
-  const GooglePageSignIn({Key key}) : super(key: key);
+// class GooglePageSignIn extends StatelessWidget {
+//   const GooglePageSignIn({Key key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: MaterialButton(
-          onPressed: () async {
-            await GoogleAuth().singInWtihGoogle();
-          },
-          child: Container(
-              decoration: BoxDecoration(color: Theme.of(context).accentColor),
-              padding: EdgeInsets.all(20),
-              child: Text("click me to login")),
-        ),
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       body: Center(
+//         child: MaterialButton(
+//           onPressed: () async {
+//             await GoogleAuth().singInWtihGoogle();
+//           },
+//           child: Container(
+//               decoration: BoxDecoration(color: Theme.of(context).accentColor),
+//               padding: EdgeInsets.all(20),
+//               child: Text("click me to login")),
+//         ),
+//       ),
+//     );
+//   }
+// }
 
 class HomePage extends StatelessWidget {
   const HomePage({Key key}) : super(key: key);

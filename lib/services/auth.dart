@@ -3,21 +3,21 @@ import "dart:async";
 import 'package:RatioCalendar/models/event.dart';
 import 'package:RatioCalendar/models/user.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+// import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 
 String host = "https://ratiocal.herokuapp.com";
 
   
-String value = await storage.read(key: key);
+// String value = await storage.read(key: key);
 
-Map<String, String> allValues = await storage.readAll();
+// Map<String, String> allValues = await storage.readAll();
 
-await storage.delete(key: key);
+// await storage.delete(key: key);
 
-await storage.deleteAll();
+// await storage.deleteAll();
 
-await storage.write(key: key, value: value);
+// await storage.write(key: key, value: value);
 
 enum LoginStatus {
   Authenticated,
@@ -33,14 +33,14 @@ class Auth extends ChangeNotifier{
   factory Auth() => _singleton;
   Auth._internal();
 
-  User _user = null;
+  User _user;
   String token;
   LoginStatus _status = LoginStatus.Unauthenticated;
   String statusError;
-  final storage = FlutterSecureStorage();
+  // final storage = FlutterSecureStorage();
 
   set status(LoginStatus newStatus) {
-    var _status = newStatus;
+    _status = newStatus;
     notifyListeners();
   }
 
@@ -69,7 +69,7 @@ class Auth extends ChangeNotifier{
       }
       _user = User.fromJson(responseJson);
       status = LoginStatus.Authenticated;
-      await storage.write(key: "token", value: _user.password);
+      // await storage.write(key: "token", value: _user.password);
       return true;
     }
     catch(e) {
@@ -78,29 +78,29 @@ class Auth extends ChangeNotifier{
     }
   }
 
-  Future<bool> _loginFromStorage() async {
-    var password = await storage.read(key: "token");
+  // Future<bool> _loginFromStorage() async {
+  //   var password = await storage.read(key: "token");
 
-    var headers = {
-      "Content-Type": "application/json",
-      "Authorization" : password,
-    };
+  //   var headers = {
+  //     "Content-Type": "application/json",
+  //     "Authorization" : password,
+  //   };
 
-    var req = await http.get("${host}/api/user/login");
+  //   var req = await http.get("${host}/api/user/login");
 
-    try {
-      Map responseJson = json.decode(req.body);
-      if(req.statusCode != 200){
-        return false;
-      }
-      _user = User.fromJson(responseJson);
-      return true;
-    }
-    catch(e) {
-      print(req.body);
-      return false;
-    }
-  }
+  //   try {
+  //     Map responseJson = json.decode(req.body);
+  //     if(req.statusCode != 200){
+  //       return false;
+  //     }
+  //     _user = User.fromJson(responseJson);
+  //     return true;
+  //   }
+  //   catch(e) {
+  //     print(req.body);
+  //     return false;
+  //   }
+  // }
 
   Future<List<Event>> getEvents() async {
     if (_user == null) {
