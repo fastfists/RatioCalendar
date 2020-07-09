@@ -56,10 +56,9 @@ class HomePage extends StatelessWidget {
       child: Consumer<Auth>(builder: (context, Auth auth, _) {
         switch (auth.status) {
           case LoginStatus.Uninitialized:
-            return Splash();
           case LoginStatus.Unauthenticated:
           case LoginStatus.Authenticating:
-            return LoginPage();
+            return Splash();
           case LoginStatus.Authenticated:
             return CalendarPage();
         }
@@ -71,9 +70,19 @@ class HomePage extends StatelessWidget {
 class Splash extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: Center(
-        child: Text("Splash Screen"),
+    return Scaffold(
+      body: Center(
+        child: Column(
+          children: [
+            Text("Splash Screen"),
+            MaterialButton(
+              onPressed: () {
+                
+              },
+              child: Text("Click Here To Continue"),
+            )
+          ],
+        ),
       ),
     );
   }
