@@ -196,7 +196,6 @@ class _EventDetailsState extends State<EventDetails>
         });
   }
 
-  @override
   Widget backSide(BuildContext context) {
     return Transform(
       transform: Matrix4.identity()
@@ -222,7 +221,6 @@ class _EventDetailsState extends State<EventDetails>
     );
   }
 
-  @override
   Widget frontSide(BuildContext context) {
     var normal = TextStyle(fontSize: 10);
     var bold = Theme.of(context).textTheme.headline3;

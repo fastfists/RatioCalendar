@@ -18,6 +18,7 @@ class App extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        backgroundColor: Color.fromRGBO(11, 105, 157, .56),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: HomePage(),
@@ -70,18 +71,36 @@ class HomePage extends StatelessWidget {
 class Splash extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
-      body: Center(
-        child: Column(
-          children: [
-            Text("Splash Screen"),
-            MaterialButton(
-              onPressed: () {
-                
-              },
-              child: Text("Click Here To Continue"),
-            )
-          ],
+      body: Container(
+        color: Color.fromRGBO(11, 105, 157, .56),
+        child: Center(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text("Splash Screen",
+                style: Theme.of(context).textTheme.headline2,
+              ),
+              SizedBox(height: 30),
+              MaterialButton(
+                onPressed: () {
+                  
+                },
+                color: Colors.blueGrey,
+                child: Text("Login"),
+              ),
+              SizedBox(height: 5),
+              MaterialButton(
+                onPressed: () {
+                  
+                },
+                color: Colors.blueGrey,
+                child: Text("Register "),
+              ),
+            ],
+          ),
         ),
       ),
     );
