@@ -1,42 +1,75 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class Splash extends StatefulWidget {
   @override
   _SplashState createState() => _SplashState();
 }
 
-class _SplashState extends State<Splash> with TickerProviderStateMixin {
+class _SplashState extends State<Splash> 
+  with SingleTickerProviderStateMixin {
+
   AnimationController _controller;
-  AnimationController sliderController;
-  Animation slider;
+
+  Animation<double> slider;
+  Animation<double> clock;
+  Animation<double> nextPage;
+  
 
   @override
   void initState() {
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 3),
-    );
-    sliderController = AnimationController(
-      vsync: this,
-      duration: Duration(seconds: 1),
+      duration: Duration(seconds: 5),
     );
 
-    slider = CurvedAnimation(
-      parent: sliderController,
-      curve: Curves.easeInOutExpo,
+    clock = Tween<double>(
+      begin: 0.0,
+      end: 1.0,
+
+    ).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: Interval(
+          0.0, 0.7,
+          curve: Curves.elasticIn,
+        ),
+      )
     );
 
+    slider = Tween<double>(
+      begin: 0.0,
+      end: 1.0,
+
+    ).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: Interval(
+          0.7, 0.9,
+          curve: Curves.easeInOutExpo,
+        ),
+      )
+    );
+
+    nextPage = Tween<double>(
+      begin: 0.0,
+      end: 1.0,
+
+    ).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: Interval(
+          0.9, 1.0,
+          curve: Curves.linear,
+        ),
+      )
+    );
 
     _controller.forward();
 
-    _controller.addStatusListener((status) {
-      if (status == AnimationStatus.completed){
-        sliderController.forward();
-      }
-    });
   }
 
   @override
@@ -52,10 +85,31 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
 
     return Scaffold(
         body: AnimatedBuilder(
-            animation: slider,
+            animation: _controller,
             builder: (context, snapshot) {
               return Stack(
                 children: [
+                  Transform.translate(
+                    offset: Offset(0,10*2*-(1-nextPage.value)),
+                    child: Opacity(
+                      opacity: (nextPage.value),
+                      child: SvgPicture.asset(
+                        "assets/svg/TopSection.svg"
+                      ),
+                    ),
+                  ),
+                  Transform.translate(
+                    offset: Offset(0,-10*2*-(1-nextPage.value)),
+                    child: Opacity(
+                      opacity: (nextPage.value),
+                      child: Align(
+                        alignment: Alignment.bottomRight,
+                        child: SvgPicture.asset(
+                          "assets/svg/BottomSection.svg"
+                        ),
+                      ),
+                    ),
+                  ),
                   Transform.translate(
                     offset: Offset(0, -size.height / 2 * slider.value),
                     child: Container(
@@ -86,7 +140,7 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
                             style: Theme.of(context).textTheme.headline4,
                           )),
                           ClockWidget(
-                            controller: _controller,
+                            controller: clock,
                           ),
                         ],
                       ),
@@ -102,7 +156,7 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
 }
 
 class ClockWidget extends StatelessWidget {
-  final AnimationController controller;
+  final Animation controller;
   const ClockWidget({Key key, this.controller}) : super(key: key);
 
   @override
@@ -150,7 +204,7 @@ class ClockWidget extends StatelessWidget {
                   ..rotateZ(pi * rotations * 2 * controller.value)
                   ..translate(0.0, -15.0),
                 child: Container(
-                  width: 2,
+                  width: 4,
                   height: 35,
                   color: Colors.black,
                 ),
@@ -165,7 +219,7 @@ class ClockWidget extends StatelessWidget {
                   ..rotateZ(pi * rotations * 2 * controller.value / 30)
                   ..translate(0.0, -10.0),
                 child: Container(
-                  width: 2,
+                  width: 4,
                   height: 28,
                   color: Colors.black,
                 ),

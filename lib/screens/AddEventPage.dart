@@ -32,7 +32,7 @@ class _AddEventViewState extends State<AddEventView> {
       builder: (context, snapshot) {
         var scaleX = _animation.value;
         var scaleY = _animation.value;
-
+        
         var size = MediaQuery.of(context).size;
 
         return Transform(
