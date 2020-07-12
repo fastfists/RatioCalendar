@@ -1,5 +1,6 @@
 import 'package:RatioCalendar/screens/Calendar.dart';
 import 'package:RatioCalendar/screens/LoginPage.dart';
+import 'package:RatioCalendar/screens/splash.dart';
 // import 'package:RatioCalendar/services/google.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -68,41 +69,3 @@ class HomePage extends StatelessWidget {
   }
 }
 
-class Splash extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-
-    return Scaffold(
-      body: Container(
-        color: Color.fromRGBO(11, 105, 157, .56),
-        child: Center(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text("Splash Screen",
-                style: Theme.of(context).textTheme.headline2,
-              ),
-              SizedBox(height: 30),
-              MaterialButton(
-                onPressed: () {
-                  
-                },
-                color: Colors.blueGrey,
-                child: Text("Login"),
-              ),
-              SizedBox(height: 5),
-              MaterialButton(
-                onPressed: () {
-                  
-                },
-                color: Colors.blueGrey,
-                child: Text("Register "),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
