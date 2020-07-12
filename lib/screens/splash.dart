@@ -8,15 +8,12 @@ class Splash extends StatefulWidget {
   _SplashState createState() => _SplashState();
 }
 
-class _SplashState extends State<Splash> 
-  with SingleTickerProviderStateMixin {
-
+class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
   AnimationController _controller;
 
   Animation<double> slider;
   Animation<double> clock;
   Animation<double> nextPage;
-  
 
   @override
   void initState() {
@@ -29,47 +26,40 @@ class _SplashState extends State<Splash>
     clock = Tween<double>(
       begin: 0.0,
       end: 1.0,
-
-    ).animate(
-      CurvedAnimation(
-        parent: _controller,
-        curve: Interval(
-          0.0, 0.7,
-          curve: Curves.elasticIn,
-        ),
-      )
-    );
+    ).animate(CurvedAnimation(
+      parent: _controller,
+      curve: Interval(
+        0.0,
+        0.5,
+        curve: Curves.easeOutBack,
+      ),
+    ));
 
     slider = Tween<double>(
       begin: 0.0,
       end: 1.0,
-
-    ).animate(
-      CurvedAnimation(
-        parent: _controller,
-        curve: Interval(
-          0.7, 0.9,
-          curve: Curves.easeInOutExpo,
-        ),
-      )
-    );
+    ).animate(CurvedAnimation(
+      parent: _controller,
+      curve: Interval(
+        0.5,
+        0.7,
+        curve: Curves.easeInOutExpo,
+      ),
+    ));
 
     nextPage = Tween<double>(
       begin: 0.0,
       end: 1.0,
-
-    ).animate(
-      CurvedAnimation(
-        parent: _controller,
-        curve: Interval(
-          0.9, 1.0,
-          curve: Curves.linear,
-        ),
-      )
-    );
+    ).animate(CurvedAnimation(
+      parent: _controller,
+      curve: Interval(
+        0.7,
+        1.0,
+        curve: Curves.decelerate,
+      ),
+    ));
 
     _controller.forward();
-
   }
 
   @override
@@ -80,84 +70,210 @@ class _SplashState extends State<Splash>
 
   @override
   Widget build(BuildContext context) {
-
     var size = MediaQuery.of(context).size;
 
     return Scaffold(
-        body: AnimatedBuilder(
-            animation: _controller,
-            builder: (context, snapshot) {
-              return Stack(
-                children: [
-                  Transform.translate(
-                    offset: Offset(0,10*2*-(1-nextPage.value)),
-                    child: Opacity(
-                      opacity: (nextPage.value),
-                      child: SvgPicture.asset(
-                        "assets/svg/TopSection.svg"
-                      ),
-                    ),
+      body: AnimatedBuilder(
+          animation: _controller,
+          builder: (context, snapshot) {
+            return Stack(
+              children: [
+                Page1(animation: nextPage),
+                Transform.translate(
+                  offset: Offset(-size.width / 2 * slider.value, 0),
+                  child: Container(
+                    color: Color(0xFF0BA5FB),
+                    width: size.width / 2,
                   ),
-                  Transform.translate(
-                    offset: Offset(0,-10*2*-(1-nextPage.value)),
-                    child: Opacity(
-                      opacity: (nextPage.value),
-                      child: Align(
-                        alignment: Alignment.bottomRight,
-                        child: SvgPicture.asset(
-                          "assets/svg/BottomSection.svg"
+                ),
+                Transform.translate(
+                  offset: Offset(
+                      size.width + size.width / 2 * (slider.value - 1), 0),
+                  child: Container(
+                    color: Color(0xFF0BA5FB),
+                    width: size.width / 2,
+                  ),
+                ),
+                Opacity(
+                  opacity: 1 - slider.value,
+                  child: Container(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: <Widget>[
+                        Center(
+                            child: Text(
+                          "Ratio Calendar",
+                          style: Theme.of(context).textTheme.headline4,
+                        )),
+                        AnimatedClockWidget(
+                          animation: clock,
                         ),
-                      ),
+                      ],
                     ),
                   ),
-                  Transform.translate(
-                    offset: Offset(0, -size.height / 2 * slider.value),
-                    child: Container(
-                      color: Color(0xFF0BA5FB),
-                      height: size.height / 2,
-                    ),
-                  ),
-                  Transform.translate(
-                    offset: Offset(
-                        0,
-                        size.height +
-                            size.height / 2 * (slider.value - 1)),
-                    child: Container(
-                      color: Color(0xFF0BA5FB),
-                      height: size.height / 2,
-                    ),
-                  ),
-                  Opacity(
-                    opacity: 1-slider.value,
-                    child: Container(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: <Widget>[
-                          Center(
-                              child: Text(
-                            "Ratio Calendar",
-                            style: Theme.of(context).textTheme.headline4,
-                          )),
-                          ClockWidget(
-                            controller: clock,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              );
-            }
-          ),
-        );
+                ),
+              ],
+            );
+          }),
+    );
   }
+}
 
+class Page1 extends StatelessWidget {
+
+  final Animation animation;
+  const Page1({Key key, this.animation}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: <Widget>[
+        Align(
+          alignment: Alignment.bottomLeft,
+          child: SvgPicture.asset(
+            "assets/svg/GetStartedSwoosh.svg"
+          ),
+        ),
+        Positioned(
+          top: 89,
+          left: 89,
+          child: Text(
+            "Ratio Calendar",
+            style: Theme.of(context).textTheme.headline4,
+          ),
+        ),
+        Positioned(
+          top: 183,
+          left: 100,
+          child: ClockWidget()
+        ),
+        Positioned(
+          bottom: 123,
+          left: 150,
+          child: MaterialButton(
+            onPressed: (){},
+            child:Text(
+              "Get Started",
+              style: Theme.of(context).textTheme.subtitle1,
+            ),
+            color: Color(0xFF97E2E2),
+          ),
+        )
+      ],
+    );
+  }
+}
+
+class Page2 extends StatelessWidget {
+  final Animation animation;
+  const Page2({Key key, this.animation}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Stack(
+        children: <Widget>[
+                Transform.translate(
+                  offset: Offset(0, 10 * 2 * -(1 - animation.value)),
+                  child: Opacity(
+                    opacity: (animation.value),
+                    child: SvgPicture.asset("assets/svg/TopSection.svg"),
+                  ),
+                ),
+                Transform.translate(
+                  offset: Offset(0, -10 * 2 * -(1 - animation.value)),
+                  child: Opacity(
+                    opacity: (animation.value),
+                    child: Align(
+                      alignment: Alignment.bottomRight,
+                      child: SvgPicture.asset("assets/svg/BottomSection.svg"),
+                    ),
+                  ),
+                ),
+        ],
+      ),
+    );
+  }
 }
 
 class ClockWidget extends StatelessWidget {
-  final Animation controller;
-  const ClockWidget({Key key, this.controller}) : super(key: key);
+  const ClockWidget({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    var radius = BorderRadius.circular(400);
+    var rotations = 15;
+
+    return Container(
+        child: Stack(
+      alignment: Alignment.center,
+      children: <Widget>[
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: radius,
+            color: Color(0xFF0583FD),
+          ),
+          width: 205,
+          height: 192,
+        ),
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: radius,
+            color: Color(0xFF06B1FF),
+          ),
+          width: 180,
+          height: 166,
+        ),
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: radius,
+            border: Border.all(
+              width: 5,
+            ),
+            color: Color(0xFF6CFFFF),
+          ),
+          width: 120,
+          height: 120,
+        ),
+        Transform(
+          alignment: FractionalOffset.center,
+          transform: Matrix4.identity()
+                  ..rotateZ(pi * rotations * 2)
+                ..translate(0.0, -15.0),
+                child: Container(
+                  width: 4,
+                  height: 35,
+                  color: Colors.black,
+                ),
+        ),
+        Transform(
+          alignment: FractionalOffset.center,
+          transform: Matrix4.identity()
+            ..rotateZ(pi * rotations * 2 / 30)
+            ..translate(0.0, -10.0),
+          child: Container(
+            width: 4,
+            height: 28,
+            color: Colors.black,
+          ),
+        ),
+        Container(
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: Colors.black,
+          ),
+          width: 10,
+          height: 10,
+        ),
+      ],
+    ));
+  }
+}
+
+class AnimatedClockWidget extends StatelessWidget {
+  final Animation animation;
+  const AnimatedClockWidget({Key key, this.animation}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -196,12 +312,12 @@ class ClockWidget extends StatelessWidget {
           height: 120,
         ),
         AnimatedBuilder(
-            animation: controller,
+            animation: animation,
             builder: (context, child) {
               return Transform(
                 alignment: FractionalOffset.center,
                 transform: Matrix4.identity()
-                  ..rotateZ(pi * rotations * 2 * controller.value)
+                  ..rotateZ(pi * rotations * 2 * animation.value)
                   ..translate(0.0, -15.0),
                 child: Container(
                   width: 4,
@@ -211,12 +327,12 @@ class ClockWidget extends StatelessWidget {
               );
             }),
         AnimatedBuilder(
-            animation: controller,
+            animation: animation,
             builder: (context, child) {
               return Transform(
                 alignment: FractionalOffset.center,
                 transform: Matrix4.identity()
-                  ..rotateZ(pi * rotations * 2 * controller.value / 30)
+                  ..rotateZ(pi * rotations * 2 * animation.value / 30)
                   ..translate(0.0, -10.0),
                 child: Container(
                   width: 4,
