@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:RatioCalendar/clips.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -126,10 +127,21 @@ class Page1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    var size = MediaQuery.of(context).size;
+
     return Stack(
       children: <Widget>[
+        ClipPath(
+          clipper: SquareCircleClipper(),
+          child: Container(
+            color: Color(0xFF97E2E2),
+            width: size.width,
+            height: size.height * 0.7,
+          ),
+        ),
         Align(
-          alignment: Alignment.bottomLeft,
+          alignment: Alignment.topRight,
           child: Opacity(
               opacity: animation.value,
               child: SvgPicture.asset("assets/svg/GetStartedSwoosh.svg")),
@@ -151,23 +163,26 @@ class Page1 extends StatelessWidget {
             child: Opacity(opacity: animation.value, child: ClockWidget())),
         Positioned(
           bottom: 123,
-          left: 20,
-          child: MaterialButton(
-            onPressed: () {},
-            child: Container(
-              width: 300,
-              height: 75,
-              child: Center(
-                child: Text(
-                  "Get Started",
-                  style: Theme.of(context)
-                      .textTheme
-                      .subtitle1
-                      .copyWith(fontSize: 30),
+          left: 80,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            child: MaterialButton(
+              onPressed: () {},
+              child: Container(
+                width: 200,
+                height: 75,
+                child: Center(
+                  child: Text(
+                    "Get Started",
+                    style: Theme.of(context)
+                        .textTheme
+                        .subtitle1
+                        .copyWith(fontSize: 30),
+                  ),
                 ),
               ),
+              color: Color(0xFF97E2E2),
             ),
-            color: Color(0xFF97E2E2),
           ),
         )
       ],
@@ -222,7 +237,7 @@ class ClockWidget extends StatelessWidget {
         Container(
           decoration: BoxDecoration(
             borderRadius: radius,
-            color: Color(0xFF0583FD),
+            color: Color(0xFFD9E9FF),
           ),
           width: 205,
           height: 192,
@@ -230,7 +245,7 @@ class ClockWidget extends StatelessWidget {
         Container(
           decoration: BoxDecoration(
             borderRadius: radius,
-            color: Color(0xFF06B1FF),
+            color: Color(0xFFBDD9FF)
           ),
           width: 180,
           height: 166,
@@ -241,7 +256,7 @@ class ClockWidget extends StatelessWidget {
             border: Border.all(
               width: 5,
             ),
-            color: Color(0xFF6CFFFF),
+            color: Color(0xFFFFFFFF),
           ),
           width: 120,
           height: 120,
@@ -252,7 +267,7 @@ class ClockWidget extends StatelessWidget {
             ..rotateZ(pi * rotations * 2)
             ..translate(0.0, -15.0),
           child: Container(
-            width: 4,
+            width: 3,
             height: 35,
             color: Colors.black,
           ),
@@ -263,7 +278,7 @@ class ClockWidget extends StatelessWidget {
             ..rotateZ(pi * rotations * 2 / 30)
             ..translate(0.0, -10.0),
           child: Container(
-            width: 4,
+            width: 3,
             height: 28,
             color: Colors.black,
           ),
@@ -273,7 +288,7 @@ class ClockWidget extends StatelessWidget {
             shape: BoxShape.circle,
             color: Colors.black,
           ),
-          width: 10,
+          width: 8,
           height: 10,
         ),
       ],
