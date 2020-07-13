@@ -55,7 +55,7 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
       curve: Interval(
         0.7,
         1.0,
-        curve: Curves.decelerate,
+        curve: Curves.easeInOut,
       ),
     ));
 
@@ -121,7 +121,6 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
 }
 
 class Page1 extends StatelessWidget {
-
   final Animation animation;
   const Page1({Key key, this.animation}) : super(key: key);
 
@@ -131,31 +130,42 @@ class Page1 extends StatelessWidget {
       children: <Widget>[
         Align(
           alignment: Alignment.bottomLeft,
-          child: SvgPicture.asset(
-            "assets/svg/GetStartedSwoosh.svg"
-          ),
+          child: Opacity(
+              opacity: animation.value,
+              child: SvgPicture.asset("assets/svg/GetStartedSwoosh.svg")),
         ),
         Positioned(
-          top: 89,
+          top: 89 + 50 * (1 - animation.value),
           left: 89,
-          child: Text(
-            "Ratio Calendar",
-            style: Theme.of(context).textTheme.headline4,
+          child: Opacity(
+            opacity: animation.value,
+            child: Text(
+              "Ratio Calendar",
+              style: Theme.of(context).textTheme.headline4,
+            ),
           ),
         ),
         Positioned(
-          top: 183,
-          left: 100,
-          child: ClockWidget()
-        ),
+            top: 183 + 25 * (1 - animation.value),
+            left: 100,
+            child: Opacity(opacity: animation.value, child: ClockWidget())),
         Positioned(
           bottom: 123,
-          left: 150,
+          left: 20,
           child: MaterialButton(
-            onPressed: (){},
-            child:Text(
-              "Get Started",
-              style: Theme.of(context).textTheme.subtitle1,
+            onPressed: () {},
+            child: Container(
+              width: 300,
+              height: 75,
+              child: Center(
+                child: Text(
+                  "Get Started",
+                  style: Theme.of(context)
+                      .textTheme
+                      .subtitle1
+                      .copyWith(fontSize: 30),
+                ),
+              ),
             ),
             color: Color(0xFF97E2E2),
           ),
@@ -174,23 +184,23 @@ class Page2 extends StatelessWidget {
     return Container(
       child: Stack(
         children: <Widget>[
-                Transform.translate(
-                  offset: Offset(0, 10 * 2 * -(1 - animation.value)),
-                  child: Opacity(
-                    opacity: (animation.value),
-                    child: SvgPicture.asset("assets/svg/TopSection.svg"),
-                  ),
-                ),
-                Transform.translate(
-                  offset: Offset(0, -10 * 2 * -(1 - animation.value)),
-                  child: Opacity(
-                    opacity: (animation.value),
-                    child: Align(
-                      alignment: Alignment.bottomRight,
-                      child: SvgPicture.asset("assets/svg/BottomSection.svg"),
-                    ),
-                  ),
-                ),
+          Transform.translate(
+            offset: Offset(0, 10 * 2 * -(1 - animation.value)),
+            child: Opacity(
+              opacity: (animation.value),
+              child: SvgPicture.asset("assets/svg/TopSection.svg"),
+            ),
+          ),
+          Transform.translate(
+            offset: Offset(0, -10 * 2 * -(1 - animation.value)),
+            child: Opacity(
+              opacity: (animation.value),
+              child: Align(
+                alignment: Alignment.bottomRight,
+                child: SvgPicture.asset("assets/svg/BottomSection.svg"),
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -239,13 +249,13 @@ class ClockWidget extends StatelessWidget {
         Transform(
           alignment: FractionalOffset.center,
           transform: Matrix4.identity()
-                  ..rotateZ(pi * rotations * 2)
-                ..translate(0.0, -15.0),
-                child: Container(
-                  width: 4,
-                  height: 35,
-                  color: Colors.black,
-                ),
+            ..rotateZ(pi * rotations * 2)
+            ..translate(0.0, -15.0),
+          child: Container(
+            width: 4,
+            height: 35,
+            color: Colors.black,
+          ),
         ),
         Transform(
           alignment: FractionalOffset.center,
