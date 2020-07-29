@@ -25,31 +25,12 @@ class CalendarView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<Auth>(
-      builder: (BuildContext context, Auth value, Widget child) {
-        return FutureBuilder(
-          future: value.getEvents(),
-          builder: (BuildContext context, AsyncSnapshot<List<Event>> snapshot) {
-            switch (snapshot.connectionState) {
-              case ConnectionState.none:
-                return Text("null");
-                break;
-              case ConnectionState.waiting:
-                return Text("waiting");
-              case ConnectionState.active:
-                return Text("active");
-              case ConnectionState.done:
-                print(snapshot.data.length.toDouble());
-                return ListView.builder(
-                    itemCount: snapshot.data.length,
-                    itemBuilder: (context, idx) {
-                      return EventDetails(event: snapshot.data[idx]);
-                    });
-            }
-          },
-        );
-      },
-    );
+
+    return ListView.builder(
+        itemCount: events.length,
+        itemBuilder: (context, idx) {
+          return EventDetails(event: events[idx]);
+    });
   }
 }
 
@@ -122,8 +103,6 @@ class EventDetails extends StatefulWidget {
 class _CalendarPageState extends State<CalendarPage>
     with SingleTickerProviderStateMixin {
   var _selectedIndex = 0;
-  AnimationController _animController;
-  Animation<double> _animation;
 
   @override
   Widget build(BuildContext context) {
@@ -150,25 +129,18 @@ class _CalendarPageState extends State<CalendarPage>
         backgroundColor: Color(0xFF97E2E2),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: toggle,
+        onPressed: () => 
+            Navigator.pushNamed(context, "/addPage"),
         backgroundColor: Colors.blue[200],
         foregroundColor: Colors.white,
         child: Icon(Icons.add),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      body: Stack(
-        alignment: FractionalOffset.bottomCenter,
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              color: Color.fromRGBO(11, 105, 157, .56),
-            ),
-            child: bottomBarWidgets[_selectedIndex],
-          ),
-          AddEventView(
-            controller: _animController,
-          ),
-        ],
+      body: Container(
+        decoration: BoxDecoration(
+          color: Color.fromRGBO(11, 105, 157, .56),
+        ),
+        child: bottomBarWidgets[_selectedIndex],
       ),
     );
   }
@@ -176,24 +148,12 @@ class _CalendarPageState extends State<CalendarPage>
   @override
   void initState() {
     super.initState();
-
-    _animController = AnimationController(
-      vsync: this,
-      duration: Duration(milliseconds: 1000),
-    );
   }
 
   void onItemTap(index) {
     setState(() {
       _selectedIndex = index;
     });
-  }
-
-  void toggle() {
-    print("toggling");
-    _animController.isDismissed
-        ? _animController.forward()
-        : _animController.reverse();
   }
 }
 

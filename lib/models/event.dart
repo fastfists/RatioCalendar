@@ -11,3 +11,10 @@ class Event {
       this.date = DateTime.parse(inJson["date"]);
   }
 }
+
+var events = <Event>[
+    Event(name: "Fuck them", description: "Right in the Pussy", date: DateTime.now()),
+    Event(name: "Fuck them", description: "Right in the Pussy", date: DateTime.now()),
+    Event(name: "Fuck them", description: "Right in the Pussy", date: DateTime.now()),
+    Event(name: "Fuck them", description: "Right in the Pussy", date: DateTime.now()),
+];

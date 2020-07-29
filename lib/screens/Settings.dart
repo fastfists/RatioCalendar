@@ -8,12 +8,6 @@ class SettingsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<Auth>(
-      builder: (context, auth, _) {
-        User user = auth.getUser();
-        return Container(
-        );
-      }
-    );
+    return Container(); 
   }
 }

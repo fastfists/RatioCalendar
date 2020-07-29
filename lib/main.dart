@@ -1,11 +1,8 @@
 import 'package:RatioCalendar/screens/Calendar.dart';
-import 'package:RatioCalendar/screens/LoginPage.dart';
-import 'package:RatioCalendar/screens/splash.dart';
+import 'package:RatioCalendar/screens/AddEventPage.dart';
 // import 'package:RatioCalendar/services/google.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-import 'services/auth.dart';
 
 void main() {
   runApp(App());
@@ -17,12 +14,17 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
+      routes: {
+        '/' : (context) => CalendarPage(),
+        '/addPage' : (context) => AddEventPage(),
+      },
+      initialRoute: '/',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
         backgroundColor: Color.fromRGBO(11, 105, 157, .56),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: HomePage(),
     );
   }
 }
@@ -47,25 +49,3 @@ class App extends StatelessWidget {
 //     );
 //   }
 // }
-
-class HomePage extends StatelessWidget {
-  const HomePage({Key key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => Auth(),
-      child: Consumer<Auth>(builder: (context, Auth auth, _) {
-        switch (auth.status) {
-          case LoginStatus.Uninitialized:
-          case LoginStatus.Unauthenticated:
-          case LoginStatus.Authenticating:
-            return Splash();
-          case LoginStatus.Authenticated:
-            return CalendarPage();
-        }
-      }),
-    );
-  }
-}
-
