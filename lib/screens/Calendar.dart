@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:math';
 
 import 'package:RatioCalendar/clips.dart';
@@ -19,6 +18,107 @@ class CalendarPage extends StatefulWidget {
   _CalendarPageState createState() => _CalendarPageState();
 }
 
+class CalendarView extends StatelessWidget {
+  const CalendarView({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<Auth>(
+      builder: (BuildContext context, Auth value, Widget child) {
+        return FutureBuilder(
+          future: value.getEvents(),
+          builder: (BuildContext context, AsyncSnapshot<List<Event>> snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.none:
+                return Text("null");
+                break;
+              case ConnectionState.waiting:
+                return Text("waiting");
+              case ConnectionState.active:
+                return Text("active");
+              case ConnectionState.done:
+                print(snapshot.data.length.toDouble());
+                return ListView.builder(
+                    itemCount: snapshot.data.length,
+                    itemBuilder: (context, idx) {
+                      return EventDetails(event: snapshot.data[idx]);
+                    });
+            }
+          },
+        );
+      },
+    );
+  }
+}
+
+class CounterWidget extends StatelessWidget {
+  DateTime date;
+
+  CounterWidget({Key key, this.date}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return TimerBuilder.periodic(Duration(seconds: 1), builder: (context) {
+      double spacing = 20;
+      double difference =
+          -DateTime.now().difference(this.date).inMilliseconds.toDouble();
+      var _days = (difference / (1000 * 60 * 60 * 24)).floorToDouble();
+      var _hours = ((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+          .floorToDouble();
+      var _mins =
+          ((difference % (1000 * 60 * 60)) / (1000 * 60)).floorToDouble();
+      var _secs = ((difference % (1000 * 60)) / 1000).floorToDouble();
+      return Row(
+        children: <Widget>[
+          Column(
+            children: <Widget>[
+              Text("Days:"),
+              Text("${_days.toInt()}"),
+            ],
+          ),
+          SizedBox(
+            width: spacing,
+          ),
+          Column(
+            children: <Widget>[
+              Text("Hours:"),
+              Text("${_hours.toInt()}"),
+            ],
+          ),
+          SizedBox(
+            width: spacing,
+          ),
+          Column(
+            children: <Widget>[
+              Text("Mins:"),
+              Text("${_mins.toInt()}"),
+            ],
+          ),
+          SizedBox(
+            width: spacing,
+          ),
+          Column(
+            children: <Widget>[
+              Text("Secs:"),
+              Text("${_secs.toInt()}"),
+            ],
+          ),
+        ],
+      );
+    });
+  }
+}
+
+class EventDetails extends StatefulWidget {
+  final Event event;
+  EventDetails({Key key, this.event}) : super(key: key);
+
+  @override
+  _EventDetailsState createState() => _EventDetailsState();
+}
+
 class _CalendarPageState extends State<CalendarPage>
     with SingleTickerProviderStateMixin {
   var _selectedIndex = 0;
@@ -26,34 +126,12 @@ class _CalendarPageState extends State<CalendarPage>
   Animation<double> _animation;
 
   @override
-  void initState() {
-    super.initState();
-
-    _animController = AnimationController(
-      vsync: this,
-      duration: Duration(milliseconds: 1000),
-    );
-  }
-
-  void toggle() {
-    print("toggling");
-    _animController.isDismissed
-        ? _animController.forward()
-        : _animController.reverse();
-  }
-
-  void onItemTap(index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
     var bottomBarWidgets = [
       CalendarView(),
       SettingsView(),
     ];
+
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
@@ -94,49 +172,29 @@ class _CalendarPageState extends State<CalendarPage>
       ),
     );
   }
-}
-
-class CalendarView extends StatelessWidget {
-  const CalendarView({
-    Key key,
-  }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return Consumer<Auth>(
-      builder: (BuildContext context, Auth value, Widget child) {
-        return FutureBuilder(
-          future: value.getEvents(),
-          builder: (BuildContext context, AsyncSnapshot<List<Event>> snapshot) {
-            switch (snapshot.connectionState) {
-              case ConnectionState.none:
-                return Text("null");
-                break;
-              case ConnectionState.waiting:
-                return Text("waiting");
-              case ConnectionState.active:
-                return Text("active");
-              case ConnectionState.done:
-                print(snapshot.data.length.toDouble());
-                return ListView.builder(
-                    itemCount: snapshot.data.length,
-                    itemBuilder: (context, idx) {
-                      return EventDetails(event: snapshot.data[idx]);
-                    });
-            }
-          },
-        );
-      },
+  void initState() {
+    super.initState();
+
+    _animController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 1000),
     );
   }
-}
 
-class EventDetails extends StatefulWidget {
-  final Event event;
-  EventDetails({Key key, this.event}) : super(key: key);
+  void onItemTap(index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
 
-  @override
-  _EventDetailsState createState() => _EventDetailsState();
+  void toggle() {
+    print("toggling");
+    _animController.isDismissed
+        ? _animController.forward()
+        : _animController.reverse();
+  }
 }
 
 class _EventDetailsState extends State<EventDetails>
@@ -144,26 +202,29 @@ class _EventDetailsState extends State<EventDetails>
   bool flipped = false;
   AnimationController _controller;
 
-  @override
-  void initState() {
-    _controller = new AnimationController(
-      vsync: this,
-      duration: Duration(milliseconds: 200),
+  Widget backSide(BuildContext context) {
+    return Transform(
+      transform: Matrix4.identity()
+        ..setEntry(3, 2, 0.002)
+        ..rotateX(pi),
+      alignment: FractionalOffset.center,
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12),
+          boxShadow: [
+            BoxShadow(
+              color: Color.fromRGBO(0, 0, 0, .25),
+              offset: Offset(0, 4),
+              blurRadius: 4,
+            )
+          ],
+        ),
+        padding: EdgeInsets.all(19),
+        margin: EdgeInsets.symmetric(horizontal: 11, vertical: 20),
+        child: Text(widget.event.description),
+      ),
     );
-    _controller.addStatusListener((status) {
-      print(status);
-      if (status == AnimationStatus.completed) {
-        setState(() {
-          flipped = true;
-        });
-      } else if (status == AnimationStatus.dismissed) {
-        setState(() {
-          flipped = false;
-        });
-      }
-    });
-
-    super.initState();
   }
 
   @override
@@ -194,31 +255,6 @@ class _EventDetailsState extends State<EventDetails>
                 ),
               ));
         });
-  }
-
-  Widget backSide(BuildContext context) {
-    return Transform(
-      transform: Matrix4.identity()
-        ..setEntry(3, 2, 0.002)
-        ..rotateX(pi),
-      alignment: FractionalOffset.center,
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(12),
-          boxShadow: [
-            BoxShadow(
-              color: Color.fromRGBO(0, 0, 0, .25),
-              offset: Offset(0, 4),
-              blurRadius: 4,
-            )
-          ],
-        ),
-        padding: EdgeInsets.all(19),
-        margin: EdgeInsets.symmetric(horizontal: 11, vertical: 20),
-        child: Text(widget.event.description),
-      ),
-    );
   }
 
   Widget frontSide(BuildContext context) {
@@ -291,62 +327,26 @@ class _EventDetailsState extends State<EventDetails>
       ],
     );
   }
-}
-
-class CounterWidget extends StatelessWidget {
-  DateTime date;
-
-  CounterWidget({Key key, this.date}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return TimerBuilder.periodic(Duration(seconds: 1), builder: (context) {
-      double spacing = 20;
-      double difference =
-          -DateTime.now().difference(this.date).inMilliseconds.toDouble();
-      var _days = (difference / (1000 * 60 * 60 * 24)).floorToDouble();
-      var _hours = ((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
-          .floorToDouble();
-      var _mins =
-          ((difference % (1000 * 60 * 60)) / (1000 * 60)).floorToDouble();
-      var _secs = ((difference % (1000 * 60)) / 1000).floorToDouble();
-      return Row(
-        children: <Widget>[
-          Column(
-            children: <Widget>[
-              Text("Days:"),
-              Text("${_days.toInt()}"),
-            ],
-          ),
-          SizedBox(
-            width: spacing,
-          ),
-          Column(
-            children: <Widget>[
-              Text("Hours:"),
-              Text("${_hours.toInt()}"),
-            ],
-          ),
-          SizedBox(
-            width: spacing,
-          ),
-          Column(
-            children: <Widget>[
-              Text("Mins:"),
-              Text("${_mins.toInt()}"),
-            ],
-          ),
-          SizedBox(
-            width: spacing,
-          ),
-          Column(
-            children: <Widget>[
-              Text("Secs:"),
-              Text("${_secs.toInt()}"),
-            ],
-          ),
-        ],
-      );
+  void initState() {
+    _controller = new AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 200),
+    );
+    _controller.addStatusListener((status) {
+      print(status);
+      if (status == AnimationStatus.completed) {
+        setState(() {
+          flipped = true;
+        });
+      } else if (status == AnimationStatus.dismissed) {
+        setState(() {
+          flipped = false;
+        });
+      }
     });
+
+    super.initState();
   }
 }
