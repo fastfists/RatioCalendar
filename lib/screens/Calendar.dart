@@ -24,7 +24,6 @@ class _CalendarPageState extends State<CalendarPage>
   AnimationController _animController;
   Animation<double> _animation;
 
-
   @override
   void initState() {
     super.initState();
@@ -66,9 +65,7 @@ class _CalendarPageState extends State<CalendarPage>
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => AddEventPage());
-        ),
+            context, MaterialPageRoute(builder: (context) => AddEventPage())),
         backgroundColor: Colors.blue[200],
         foregroundColor: Colors.white,
         child: Icon(Icons.add),
