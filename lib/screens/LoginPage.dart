@@ -52,6 +52,7 @@ class LoginPage extends StatelessWidget {
 }
 
 class LoginForm extends StatefulWidget {
+
   LoginStatus status;
   LoginForm({Key key, this.status}) : super(key: key);
 

@@ -1,10 +1,10 @@
-import 'package:RatioCalendar/screens/Calendar.dart';
-import 'package:RatioCalendar/screens/LoginPage.dart';
-import 'package:RatioCalendar/screens/splash.dart';
+import 'package:RatioCalendar/screens/SplashScreen/splash.dart';
 // import 'package:RatioCalendar/services/google.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'screens/Calendar.dart';
+import 'screens/LoginPage.dart';
 import 'services/auth.dart';
 
 void main() {
@@ -60,7 +60,8 @@ class HomePage extends StatelessWidget {
           case LoginStatus.Uninitialized:
           case LoginStatus.Unauthenticated:
           case LoginStatus.Authenticating:
-            return Splash();
+            return LoginPage();
+            break;
           case LoginStatus.Authenticated:
             return CalendarPage();
         }

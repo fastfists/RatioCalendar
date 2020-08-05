@@ -1,15 +1,14 @@
-import 'package:date_field/date_field.dart';
 import 'package:flutter/material.dart';
 
-class AddEventView extends StatefulWidget {
-  AddEventView({Key key, this.controller}) : super(key: key);
+class AddEventPage extends StatefulWidget {
+  AddEventPage({Key key, this.controller}) : super(key: key);
   Animation controller;
 
   @override
-  _AddEventViewState createState() => _AddEventViewState();
+  _AddEventPageState createState() => _AddEventPageState();
 }
 
-class _AddEventViewState extends State<AddEventView> {
+class _AddEventPageState extends State<AddEventPage> {
   DateTime selectedDate;
   Animation _animation;
 
@@ -18,7 +17,8 @@ class _AddEventViewState extends State<AddEventView> {
     super.initState();
     _animation = CurvedAnimation(
       parent: widget.controller,
-      curve: Curves.elasticOut,
+      curve: Curves.linear,
+      // curve: Curves.elasticOut,
     );
 
   }
@@ -66,11 +66,6 @@ class _AddEventViewState extends State<AddEventView> {
                           }
                           return null;
                         }),
-                    SizedBox(height: spacing),
-                    DateField(
-                      onDateSelected: (DateTime value) {  },
-                      selectedDate: DateTime.now(),
-                      ),
                     SizedBox(height: spacing),
                     TextFormField(
                       decoration: InputDecoration(

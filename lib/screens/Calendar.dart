@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:math';
 
 import 'package:RatioCalendar/clips.dart';
@@ -25,21 +24,15 @@ class _CalendarPageState extends State<CalendarPage>
   AnimationController _animController;
   Animation<double> _animation;
 
+
   @override
   void initState() {
     super.initState();
 
     _animController = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 1000),
+      duration: Duration(milliseconds: 500),
     );
-  }
-
-  void toggle() {
-    print("toggling");
-    _animController.isDismissed
-        ? _animController.forward()
-        : _animController.reverse();
   }
 
   void onItemTap(index) {
@@ -72,7 +65,10 @@ class _CalendarPageState extends State<CalendarPage>
         backgroundColor: Color(0xFF97E2E2),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: toggle,
+        onPressed: () => Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => AddEventPage());
+        ),
         backgroundColor: Colors.blue[200],
         foregroundColor: Colors.white,
         child: Icon(Icons.add),
@@ -86,9 +82,6 @@ class _CalendarPageState extends State<CalendarPage>
               color: Color.fromRGBO(11, 105, 157, .56),
             ),
             child: bottomBarWidgets[_selectedIndex],
-          ),
-          AddEventView(
-            controller: _animController,
           ),
         ],
       ),

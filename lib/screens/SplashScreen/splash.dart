@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:RatioCalendar/clips.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class Splash extends StatefulWidget {
   @override
@@ -47,19 +46,6 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
         curve: Curves.easeInOutExpo,
       ),
     ));
-
-    nextPage = Tween<double>(
-      begin: 0.0,
-      end: 1.0,
-    ).animate(CurvedAnimation(
-      parent: _controller,
-      curve: Interval(
-        0.7,
-        1.0,
-        curve: Curves.easeInOut,
-      ),
-    ));
-
     _controller.forward();
   }
 
@@ -79,7 +65,7 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
           builder: (context, snapshot) {
             return Stack(
               children: [
-                Page1(animation: nextPage),
+                Page1(entranceAnimation: nextPage, onPressed: () =>_controller.reverse(),),
                 Transform.translate(
                   offset: Offset(-size.width / 2 * slider.value, 0),
                   child: Container(
@@ -122,8 +108,10 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
 }
 
 class Page1 extends StatelessWidget {
-  final Animation animation;
-  const Page1({Key key, this.animation}) : super(key: key);
+
+  final Animation entranceAnimation;
+  final Function onPressed;
+  const Page1({Key key, this.entranceAnimation, this.onPressed}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -141,16 +129,17 @@ class Page1 extends StatelessWidget {
           ),
         ),
         Align(
-          alignment: Alignment.topRight,
+          alignment: Alignment.center,
           child: Opacity(
-              opacity: animation.value,
-              child: SvgPicture.asset("assets/svg/GetStartedSwoosh.svg")),
+              opacity: entranceAnimation.value,
+              child:  Text("Getting started swoosh"),
+            ),
         ),
         Positioned(
-          top: 89 + 50 * (1 - animation.value),
+          top: 89 + 50 * (1 - entranceAnimation.value),
           left: 89,
           child: Opacity(
-            opacity: animation.value,
+            opacity: entranceAnimation.value,
             child: Text(
               "Ratio Calendar",
               style: Theme.of(context).textTheme.headline4,
@@ -158,16 +147,16 @@ class Page1 extends StatelessWidget {
           ),
         ),
         Positioned(
-            top: 183 + 25 * (1 - animation.value),
+            top: 183 + 25 * (1 - entranceAnimation.value),
             left: 100,
-            child: Opacity(opacity: animation.value, child: ClockWidget())),
+            child: Opacity(opacity: entranceAnimation.value, child: AnimatedClockWidget(animation: entranceAnimation,))),
         Positioned(
           bottom: 123,
           left: 80,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(20),
             child: MaterialButton(
-              onPressed: () {},
+              onPressed: onPressed,
               child: Container(
                 width: 200,
                 height: 75,
@@ -188,6 +177,7 @@ class Page1 extends StatelessWidget {
       ],
     );
   }
+
 }
 
 class Page2 extends StatelessWidget {
@@ -203,7 +193,7 @@ class Page2 extends StatelessWidget {
             offset: Offset(0, 10 * 2 * -(1 - animation.value)),
             child: Opacity(
               opacity: (animation.value),
-              child: SvgPicture.asset("assets/svg/TopSection.svg"),
+              child: Text("assets/svg/TopSection.svg"),
             ),
           ),
           Transform.translate(
@@ -212,7 +202,7 @@ class Page2 extends StatelessWidget {
               opacity: (animation.value),
               child: Align(
                 alignment: Alignment.bottomRight,
-                child: SvgPicture.asset("assets/svg/BottomSection.svg"),
+                child: Text("assets/svg/BottomSection.svg"),
               ),
             ),
           ),
@@ -222,13 +212,15 @@ class Page2 extends StatelessWidget {
   }
 }
 
+
+
+
 class ClockWidget extends StatelessWidget {
   const ClockWidget({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     var radius = BorderRadius.circular(400);
-    var rotations = 15;
 
     return Container(
         child: Stack(
@@ -264,7 +256,7 @@ class ClockWidget extends StatelessWidget {
         Transform(
           alignment: FractionalOffset.center,
           transform: Matrix4.identity()
-            ..rotateZ(pi * rotations * 2)
+            ..rotateZ(pi * 2)
             ..translate(0.0, -15.0),
           child: Container(
             width: 3,
@@ -275,7 +267,7 @@ class ClockWidget extends StatelessWidget {
         Transform(
           alignment: FractionalOffset.center,
           transform: Matrix4.identity()
-            ..rotateZ(pi * rotations * 2 / 30)
+            ..rotateZ(-5*pi/4)
             ..translate(0.0, -10.0),
           child: Container(
             width: 3,
@@ -357,7 +349,7 @@ class AnimatedClockWidget extends StatelessWidget {
               return Transform(
                 alignment: FractionalOffset.center,
                 transform: Matrix4.identity()
-                  ..rotateZ(pi * rotations * 2 * animation.value / 30)
+                  ..rotateZ(-5*pi/4 * rotations * 2 * animation.value / 30)
                   ..translate(0.0, -10.0),
                 child: Container(
                   width: 4,
