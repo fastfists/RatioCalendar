@@ -18,6 +18,27 @@ class CalendarPage extends StatefulWidget {
   _CalendarPageState createState() => _CalendarPageState();
 }
 
+class _CalendarPageState extends State<CalendarPage>
+    with SingleTickerProviderStateMixin {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => Navigator.pushNamed(context, "/addPage"),
+        backgroundColor: Colors.blue[200],
+        foregroundColor: Colors.white,
+        child: Icon(Icons.add),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      body: Container(
+          decoration: BoxDecoration(
+            color: Color.fromRGBO(11, 105, 157, .56),
+          ),
+          child: CalendarView()),
+    );
+  }
+}
+
 class CalendarView extends StatelessWidget {
   const CalendarView({
     Key key,
@@ -25,12 +46,11 @@ class CalendarView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return ListView.builder(
         itemCount: events.length,
         itemBuilder: (context, idx) {
           return EventDetails(event: events[idx]);
-    });
+        });
   }
 }
 
@@ -98,63 +118,6 @@ class EventDetails extends StatefulWidget {
 
   @override
   _EventDetailsState createState() => _EventDetailsState();
-}
-
-class _CalendarPageState extends State<CalendarPage>
-    with SingleTickerProviderStateMixin {
-  var _selectedIndex = 0;
-
-  @override
-  Widget build(BuildContext context) {
-    var bottomBarWidgets = [
-      CalendarView(),
-      SettingsView(),
-    ];
-
-    return Scaffold(
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex,
-        onTap: onItemTap,
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_today),
-            title: Text('Calendar'),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            title: Text('Settings'),
-          ),
-        ],
-        selectedItemColor: Colors.white,
-        backgroundColor: Color(0xFF97E2E2),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => 
-            Navigator.pushNamed(context, "/addPage"),
-        backgroundColor: Colors.blue[200],
-        foregroundColor: Colors.white,
-        child: Icon(Icons.add),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      body: Container(
-        decoration: BoxDecoration(
-          color: Color.fromRGBO(11, 105, 157, .56),
-        ),
-        child: bottomBarWidgets[_selectedIndex],
-      ),
-    );
-  }
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  void onItemTap(index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
 }
 
 class _EventDetailsState extends State<EventDetails>
