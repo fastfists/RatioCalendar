@@ -1,3 +1,4 @@
+import 'package:RatioCalendar/models/event.dart';
 import 'package:date_field/date_field.dart';
 import 'package:flutter/material.dart';
 
@@ -22,9 +23,27 @@ class _AddEventPageState extends State<AddEventPage> {
     super.initState();
     _title = TextEditingController(text: "");
     _description = TextEditingController(text: "");
+    _date = DateTime.now();
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    _title.dispose();
+    _description.dispose();
+  }
+
+  void submitForm(BuildContext context) {
+    var event = Event(
+            name: _title.text,
+            description: _description.text,
+            date: _date);
+
+    events.add(event);
+    Navigator.pop(context);
+  }
+
+ @override
   Widget build(BuildContext context) {
     double spacing = 20;
     var size = MediaQuery.of(context).size;
@@ -43,7 +62,9 @@ class _AddEventPageState extends State<AddEventPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Icon(Icons.arrow_back),
+                      GestureDetector(
+                              onTap: () => Navigator.pop(context),
+                              child: Icon(Icons.arrow_back)),
                       Text("Create New Task",
                           style: Theme.of(context).textTheme.headline3),
                     ])),
@@ -74,7 +95,9 @@ class _AddEventPageState extends State<AddEventPage> {
                           }),
                       SizedBox(height: spacing),
                       DateField(
-                        onDateSelected: (DateTime value) {},
+                        onDateSelected: (DateTime value) {
+                          _date = value;
+                        },
                         selectedDate: DateTime.now(),
                       ),
                       SizedBox(height: spacing),
@@ -84,6 +107,16 @@ class _AddEventPageState extends State<AddEventPage> {
                           hintText: "Description",
                         ),
                       ),
+                      Spacer(),
+                      Align(
+                        alignment: Alignment.bottomRight,
+                        child: FlatButton(
+                          onPressed: () => submitForm(context),
+                          color: Colors.black26,
+                          child: Text("Add Event"),
+                        ),
+                      ),
+                      SizedBox(height: spacing),
                     ],
                   ),
                 ),
