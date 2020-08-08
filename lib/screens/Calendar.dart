@@ -29,15 +29,12 @@ class CalendarView extends StatelessWidget {
         SafeArea(
           child: Padding(
             padding: const EdgeInsets.only(left: 15),
-            child: RichText(
-              text: TextSpan(
-                
+            child: Row(
                 children: [
-                  TextSpan(text: "Hello,\n",style: Theme.of(context).textTheme.headline2,),
-                  TextSpan(
-                    text: "Denzell",
-                    style: Theme.of(context).textTheme.headline2
-                )])))),
+                  Text("Hello, "),
+                  Text("Denzell "),
+                  Text(DateTime.now().toIso8601String())
+                ]))),
         Expanded(
           child: StreamBuilder<List<Event>>(
             stream: GetIt.I<EventModel>().stream,
