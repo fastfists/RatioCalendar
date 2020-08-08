@@ -8,8 +8,6 @@ class User {
   String email;
   String password;
 
-  List<Event> events = null;
-
   setJsonInfo(Map<String, dynamic> inJson){
     this.username = inJson["username"];
     this.email = inJson["email"];

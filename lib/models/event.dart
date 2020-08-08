@@ -17,12 +17,14 @@ class Event {
 
 class EventModel {
 
-  final _events = BehaviorSubject<List<Event>>.seeded(<Event>[
-    Event(name: "Fuck them", description: "Right in the Pussy", date: DateTime.now()),
-    Event(name: "Fuck them", description: "Right in the Pussy", date: DateTime.now()),
-  ]);
+  final _events = BehaviorSubject<List<Event>>.seeded(<Event>[]);
 
   Stream<List<Event>> get stream => _events.stream;
+
+  void addAllEvents(List<Event> events) {
+    var list = _events.value.toList();
+    _events.add(list..addAll(events)..toList());
+  }
 
   void addEvent(Event event) {
     var list = _events.value.toList();

@@ -1,7 +1,7 @@
 import 'package:RatioCalendar/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:provider/provider.dart';
+import 'package:get_it/get_it.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({Key key}) : super(key: key);
@@ -79,7 +79,7 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   submitForm() async {
-    var authentication = Provider.of<Auth>(context, listen: false);
+    var authentication = GetIt.I<AuthModel>();
     if (!await authentication.login(_username.text, _password.text)) {
       print("someting bad happend");
     }
@@ -87,6 +87,13 @@ class _LoginFormState extends State<LoginForm> {
 
   @override
   Widget build(BuildContext context) {
+
+    Stream<LoginStatus> statusStream = GetIt.I<AuthModel>().statusStream;
+    
+    statusStream
+      .where((status) => status == LoginStatus.Authenticated)
+      .listen((status) => Navigator.of(context).pushNamed("/"));
+
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 50),
       child: Form(
@@ -109,8 +116,7 @@ class _LoginFormState extends State<LoginForm> {
                   return null;
                 }),
             SizedBox(
-              height: 10,
-            ),
+              height: 10,),
             TextFormField(
                 controller: _password,
                 decoration: InputDecoration(
@@ -126,39 +132,40 @@ class _LoginFormState extends State<LoginForm> {
                   return null;
                 }),
             SizedBox(
-              height: 30,
-            ),
-            Consumer<Auth>(builder: (context, auth, _) {
-              return Column(
-                children: <Widget>[
-                  if (auth.status == LoginStatus.Authenticating)
-                    CircularProgressIndicator(),
-                  if (auth.status == LoginStatus.Unauthenticated)
-                    Container(
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(50),
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                              blurRadius: 4,
-                              offset: Offset(0, 6),
-                              color: Color.fromRGBO(0, 0, 0, .25)),
-                        ],
-                      ),
-                      child: FlatButton(
-                        onPressed: () async {
-                          await submitForm();
-                        },
-                        child: Text(
-                          "Register",
-                          style: TextStyle(fontSize: 20, color: Colors.black),
-                        ),
-                      ),
-                    )
-                ],
-              );
-            }),
+              height: 30),
+            StreamBuilder<LoginStatus>(
+                stream: statusStream,
+                builder: (context, snapshot) {
+                  return Column(
+                    children: <Widget>[
+                      if (snapshot.data == LoginStatus.Authenticating)
+                        CircularProgressIndicator(),
+                      if (snapshot.data == LoginStatus.Unauthenticated)
+                        Container(
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50),
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                  blurRadius: 4,
+                                  offset: Offset(0, 6),
+                                  color: Color.fromRGBO(0, 0, 0, .25)),
+                            ],
+                          ),
+                          child: FlatButton(
+                            onPressed: () async {
+                              await submitForm();
+                            },
+                            child: Text(
+                              "Register",
+                              style: TextStyle(fontSize: 20, color: Colors.black),
+                            ),
+                          ),
+                        )
+                    ],
+                  );
+                }),
           ],
         ),
       ),

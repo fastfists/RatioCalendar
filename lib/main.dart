@@ -1,13 +1,17 @@
 import 'package:RatioCalendar/screens/Calendar.dart';
 import 'package:RatioCalendar/screens/AddEventPage.dart';
 import 'package:RatioCalendar/models/event.dart';
+import 'package:RatioCalendar/screens/LoginPage.dart';
 // import 'package:RatioCalendar/services/google.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
+import 'services/auth.dart';
+
 
 void setup() {
   GetIt.I.registerSingleton<EventModel>(EventModel());
+  GetIt.I.registerSingleton<AuthModel>(AuthModel());
 }
 
 void main() {
@@ -24,8 +28,9 @@ class App extends StatelessWidget {
       routes: {
         '/' : (context) => CalendarPage(),
         '/addPage' : (context) => AddEventPage(),
+        '/login' : (context) => LoginPage(),
       },
-      initialRoute: '/',
+      initialRoute: '/login',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,

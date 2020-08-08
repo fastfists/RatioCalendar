@@ -3,8 +3,10 @@ import "dart:async";
 import 'package:RatioCalendar/models/event.dart';
 import 'package:RatioCalendar/models/user.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get_it/get_it.dart';
 // import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
+import 'package:rxdart/rxdart.dart';
 
 String host = "https://ratiocal.herokuapp.com";
 
@@ -26,25 +28,28 @@ enum LoginStatus {
   Uninitialized,
 }
 
-class Auth extends ChangeNotifier{
+class AuthModel {
 
-  // Make it a singleton
-  static final Auth _singleton = Auth._internal();
-  factory Auth() => _singleton;
-  Auth._internal();
+  String _token;
 
-  User _user;
-  String token;
-  LoginStatus _status = LoginStatus.Unauthenticated;
-  String statusError;
-  // final storage = FlutterSecureStorage();
+  // TODO: Does this cancel on Error????
+  final statusBehavior = BehaviorSubject<LoginStatus>.seeded(
+    LoginStatus.Unauthenticated
+  );
+  final user = BehaviorSubject<User>();
 
-  set status(LoginStatus newStatus) {
-    _status = newStatus;
-    notifyListeners();
+  Stream<LoginStatus> get statusStream => statusBehavior.stream; 
+  LoginStatus get status => statusBehavior.stream.value; 
+
+  Stream<User> get userStream => user.stream;
+
+  AuthModel() {
+    statusStream
+        .where( (status) => status == LoginStatus.Authenticated)
+        .listen((status) async {
+          await getEvents();
+        });
   }
-
-  LoginStatus get status => _status;
 
   Future<bool> login(String username, String password) async {
     var jsonBody = json.encode({
@@ -54,21 +59,22 @@ class Auth extends ChangeNotifier{
     var headers = {
       "Content-Type": "application/json",
     };
-    status = LoginStatus.Authenticating;
 
-    var req = await http.post("${host}/api/user/login", body: jsonBody, headers: headers);
+    statusBehavior.add(LoginStatus.Authenticating);
+
+    var req = await http.post("$host/api/user/login", body: jsonBody, headers: headers);
     try {
       Map responseJson = json.decode(req.body);
       print(req.body);
       if(req.statusCode != 200){
-        status = LoginStatus.Authenticating;
+        statusBehavior.add(LoginStatus.Authenticating);
         if ( responseJson.containsValue("error") ){
-          statusError = responseJson["error"];
+          statusBehavior.addError(responseJson["error"]);
         }
         return false;
       }
-      _user = User.fromJson(responseJson);
-      status = LoginStatus.Authenticated;
+      user.add(User.fromJson(responseJson));
+      statusBehavior.add(LoginStatus.Authenticated);
       // await storage.write(key: "token", value: _user.password);
       return true;
     }
@@ -102,19 +108,13 @@ class Auth extends ChangeNotifier{
   //   }
   // }
 
-  Future<List<Event>> getEvents() async {
-    if (_user == null) {
-      throw Error;
-    }
-    if (_user.events != null){
-      return _user.events;
-    }
+  getEvents() async {
 
     var headers = {
-      "Authorization" : _user.password,
+      "Authorization" : user.stream.value.password,
     };
 
-    var req = await http.get("${host}/api/events", headers: headers);
+    var req = await http.get("$host/api/events", headers: headers);
     var responseJson = json.decode(req.body);
 
     if (req.statusCode == 200){
@@ -122,22 +122,23 @@ class Auth extends ChangeNotifier{
       responseJson["events"].forEach((element) {
         events.add(Event.fromJson(element));
       });
+
+      GetIt.I<EventModel>().addAllEvents(events);
       
-      _user.events = events;
       print(events);
       return events;
     }
   }
 
-  Future<bool> logout() {
+  // Future<bool> logout() {
 
-  }
+  // }
 
-  User getUser() {
-    if (_user == null) {
-      throw Error;
-    }
-    return _user;
-  }
+  // User getUser() {
+  //   if (_user == null) {
+  //     throw Error;
+  //   }
+  //   return _user;
+  // }
 
 }

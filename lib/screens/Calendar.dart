@@ -21,6 +21,11 @@ class CalendarView extends StatelessWidget {
     Key key,
   }) : super(key: key);
 
+  String formatDate(DateTime date) {
+    final DateFormat formatter = DateFormat('EEEE dd, MMM');
+    return formatter.format(date);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -28,12 +33,29 @@ class CalendarView extends StatelessWidget {
       children: [
         SafeArea(
           child: Padding(
-            padding: const EdgeInsets.only(left: 15),
+            padding: const EdgeInsets.symmetric(horizontal: 15),
             child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Text("Hello, "),
-                  Text("Denzell "),
-                  Text(DateTime.now().toIso8601String())
+                  Text(
+                    "Hello ",
+                    style: TextStyle(
+                      color: Colors.black38,
+                      fontSize: 30,
+                      fontWeight: FontWeight.w300,
+                    )
+                  ),
+                  Text(
+                    "Denzell",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 30,
+                      fontWeight: FontWeight.w500,
+                    )
+                  ),
+                  Spacer(),
+                  Text(formatDate(DateTime.now())),
                 ]))),
         Expanded(
           child: StreamBuilder<List<Event>>(
