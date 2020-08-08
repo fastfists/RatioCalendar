@@ -28,9 +28,10 @@ dependencies:
   intl:
   timer_builder:
   date_field:
-  google_sign_in:
   flutter_secure_storage:
   flutter_svg: ^0.18.0
+  rxdart: ^0.24.1
+  get_it: ^4.0.4
 
   cupertino_icons: ^0.1.3
 

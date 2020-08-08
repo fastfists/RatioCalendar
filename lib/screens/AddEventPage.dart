@@ -1,6 +1,7 @@
 import 'package:RatioCalendar/models/event.dart';
 import 'package:date_field/date_field.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 class AddEventPage extends StatefulWidget {
   AddEventPage({Key key}) : super(key: key);
@@ -28,19 +29,25 @@ class _AddEventPageState extends State<AddEventPage> {
 
   @override
   void dispose() {
-    super.dispose();
     _title.dispose();
     _description.dispose();
+    super.dispose();
   }
 
   void submitForm(BuildContext context) {
-    var event = Event(
-            name: _title.text,
-            description: _description.text,
-            date: _date);
+    if (_formKey.currentState.validate()) {
 
-    events.add(event);
-    Navigator.pop(context);
+      // Scaffold
+      //     .of(context)
+      //     .showSnackBar(SnackBar(content: Text('Processing Data')));
+        var event = Event(
+                name: _title.text,
+                description: _description.text,
+                date: _date);
+
+        GetIt.I<EventModel>().addEvent(event);
+        Navigator.pop(context);
+    }
   }
 
  @override
@@ -50,6 +57,7 @@ class _AddEventPageState extends State<AddEventPage> {
 
     return Scaffold(
       backgroundColor: Colors.blue[200],
+      appBar: AppBar( title: Text("Create new task")),
       body: Container(
         color: Colors.black26,
         child: Column(
@@ -62,9 +70,6 @@ class _AddEventPageState extends State<AddEventPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      GestureDetector(
-                              onTap: () => Navigator.pop(context),
-                              child: Icon(Icons.arrow_back)),
                       Text("Create New Task",
                           style: Theme.of(context).textTheme.headline3),
                     ])),
@@ -84,28 +89,36 @@ class _AddEventPageState extends State<AddEventPage> {
                     children: <Widget>[
                       SizedBox(height: spacing),
                       TextFormField(
-                          decoration: InputDecoration(
-                            hintText: "Title",
-                          ),
-                          validator: (value) {
-                            if (value.isEmpty) {
-                              return "Please enter a title";
-                            }
-                            return null;
-                          }),
+                        controller: _title,
+                        decoration: InputDecoration(
+                        hintText: "Title",
+                        ),
+                        validator: (value) {
+                        if (value.isEmpty) {
+                            return "Please enter a title";
+                        }
+                        return null;
+                      }),
                       SizedBox(height: spacing),
                       DateField(
                         onDateSelected: (DateTime value) {
                           _date = value;
                         },
-                        selectedDate: DateTime.now(),
+                        selectedDate: _date,
                       ),
                       SizedBox(height: spacing),
                       TextFormField(
-                        maxLines: 3,
+                        controller: _description,
                         decoration: InputDecoration(
                           hintText: "Description",
                         ),
+                        maxLines: 3,
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return "Please enter a title";
+                          }
+                          return null;
+                        }
                       ),
                       Spacer(),
                       Align(

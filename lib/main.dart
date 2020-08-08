@@ -1,10 +1,17 @@
 import 'package:RatioCalendar/screens/Calendar.dart';
 import 'package:RatioCalendar/screens/AddEventPage.dart';
+import 'package:RatioCalendar/models/event.dart';
 // import 'package:RatioCalendar/services/google.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
+
+void setup() {
+  GetIt.I.registerSingleton<EventModel>(EventModel());
+}
 
 void main() {
+  setup();
   runApp(App());
 }
 

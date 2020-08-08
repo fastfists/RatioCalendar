@@ -80,8 +80,6 @@ class _LoginFormState extends State<LoginForm> {
 
   submitForm() async {
     var authentication = Provider.of<Auth>(context, listen: false);
-    print(_username.text);
-    print(_password.text);
     if (!await authentication.login(_username.text, _password.text)) {
       print("someting bad happend");
     }

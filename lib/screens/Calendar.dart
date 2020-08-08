@@ -2,41 +2,18 @@ import 'dart:math';
 
 import 'package:RatioCalendar/clips.dart';
 import 'package:RatioCalendar/models/event.dart';
-import 'package:RatioCalendar/screens/AddEventPage.dart';
-import 'package:RatioCalendar/services/auth.dart';
+
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 import 'package:timer_builder/timer_builder.dart';
 
-import 'Settings.dart';
 
 class CalendarPage extends StatefulWidget {
   CalendarPage({Key key}) : super(key: key);
 
   @override
   _CalendarPageState createState() => _CalendarPageState();
-}
-
-class _CalendarPageState extends State<CalendarPage>
-    with SingleTickerProviderStateMixin {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => Navigator.pushNamed(context, "/addPage"),
-        backgroundColor: Colors.blue[200],
-        foregroundColor: Colors.white,
-        child: Icon(Icons.add),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      body: Container(
-          decoration: BoxDecoration(
-            color: Color.fromRGBO(11, 105, 157, .56),
-          ),
-          child: CalendarView()),
-    );
-  }
 }
 
 class CalendarView extends StatelessWidget {
@@ -46,16 +23,40 @@ class CalendarView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-        itemCount: events.length,
-        itemBuilder: (context, idx) {
-          return EventDetails(event: events[idx]);
-        });
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.only(left: 15),
+            child: RichText(
+              text: TextSpan(
+                
+                children: [
+                  TextSpan(text: "Hello,\n",style: Theme.of(context).textTheme.headline2,),
+                  TextSpan(
+                    text: "Denzell",
+                    style: Theme.of(context).textTheme.headline2
+                )])))),
+        Expanded(
+          child: StreamBuilder<List<Event>>(
+            stream: GetIt.I<EventModel>().stream,
+            builder: (context, snapshot) {
+              return ListView.builder(
+                  itemCount: snapshot.data.length,
+                  itemBuilder: (context, idx) {
+                    return EventDetails(event: snapshot.data[idx]);
+                  });
+            }
+          ),
+        ),
+      ],
+    );
   }
 }
 
 class CounterWidget extends StatelessWidget {
-  DateTime date;
+  final DateTime date;
 
   CounterWidget({Key key, this.date}) : super(key: key);
 
@@ -120,34 +121,51 @@ class EventDetails extends StatefulWidget {
   _EventDetailsState createState() => _EventDetailsState();
 }
 
+class _CalendarPageState extends State<CalendarPage>
+    with SingleTickerProviderStateMixin {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => Navigator.pushNamed(context, "/addPage"),
+        backgroundColor: Colors.blue[200],
+        foregroundColor: Colors.white,
+        child: Icon(Icons.add),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      body: Container(
+          decoration: BoxDecoration(
+            color: Color.fromRGBO(11, 105, 157, .56),
+          ),
+          child: CalendarView()),
+    );
+  }
+}
+
 class _EventDetailsState extends State<EventDetails>
     with SingleTickerProviderStateMixin {
   bool flipped = false;
   AnimationController _controller;
 
-  Widget backSide(BuildContext context) {
-    return Transform(
-      transform: Matrix4.identity()
-        ..setEntry(3, 2, 0.002)
-        ..rotateX(pi),
-      alignment: FractionalOffset.center,
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(12),
-          boxShadow: [
-            BoxShadow(
-              color: Color.fromRGBO(0, 0, 0, .25),
-              offset: Offset(0, 4),
-              blurRadius: 4,
-            )
-          ],
-        ),
-        padding: EdgeInsets.all(19),
-        margin: EdgeInsets.symmetric(horizontal: 11, vertical: 20),
-        child: Text(widget.event.description),
-      ),
+  @override
+  void initState() {
+    _controller = new AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 200),
     );
+    _controller.addStatusListener((status) {
+      print(status);
+      if (status == AnimationStatus.completed) {
+        setState(() {
+          flipped = true;
+        });
+      } else if (status == AnimationStatus.dismissed) {
+        setState(() {
+          flipped = false;
+        });
+      }
+    });
+    super.initState();
   }
 
   @override
@@ -181,7 +199,6 @@ class _EventDetailsState extends State<EventDetails>
   }
 
   Widget frontSide(BuildContext context) {
-    var normal = TextStyle(fontSize: 10);
     var bold = Theme.of(context).textTheme.headline3;
 
     return Stack(
@@ -251,25 +268,28 @@ class _EventDetailsState extends State<EventDetails>
     );
   }
 
-  @override
-  void initState() {
-    _controller = new AnimationController(
-      vsync: this,
-      duration: Duration(milliseconds: 200),
+  Widget backSide(BuildContext context) {
+    return Transform(
+      transform: Matrix4.identity()
+        ..setEntry(3, 2, 0.002)
+        ..rotateX(pi),
+      alignment: FractionalOffset.center,
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12),
+          boxShadow: [
+            BoxShadow(
+              color: Color.fromRGBO(0, 0, 0, .25),
+              offset: Offset(0, 4),
+              blurRadius: 4,
+            )
+          ],
+        ),
+        padding: EdgeInsets.all(19),
+        margin: EdgeInsets.symmetric(horizontal: 11, vertical: 20),
+        child: Text(widget.event.description),
+      ),
     );
-    _controller.addStatusListener((status) {
-      print(status);
-      if (status == AnimationStatus.completed) {
-        setState(() {
-          flipped = true;
-        });
-      } else if (status == AnimationStatus.dismissed) {
-        setState(() {
-          flipped = false;
-        });
-      }
-    });
-
-    super.initState();
   }
 }
